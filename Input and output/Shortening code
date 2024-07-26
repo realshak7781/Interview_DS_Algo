@@ -1,0 +1,20 @@
+~typedef long long ll;
+After this, the code
+```
+long long a = 123456789;
+long long b = 987654321;
+cout << a*b << "\n";
+```
+can be shortened as follows:
+```
+ll a = 123456789;
+ll b = 987654321;
+cout << a*b << "\n";
+```
+The command typedef can also be used with more complex types. For example,
+the following code gives the name vi for a vector of integers and the name pi for
+a pair that contains two integers.
+typedef vector<int> vi;
+typedef pair<int,int> pi;
+
+
