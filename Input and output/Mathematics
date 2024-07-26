@@ -1,0 +1,17 @@
+~Σx = 1 + 2 + 3 + ... + n = n(n+1)/2
+Σx^2 = 1^2 + 2^2 + 3^2 + ... + n^2 = n(n+1)(2n+1)/6
+
+
+a + ... + b | {z}
+            n numbers
+=
+n(a + b)/2
+
+
+~Harmonic sum and the upper bound
+An upper bound for a harmonic sum is log2
+(n) + 1. Namely, we can modify
+each term 1/k so that k becomes the nearest power of two that does not exceed k.
+read example
+
+~
