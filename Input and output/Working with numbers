@@ -1,0 +1,50 @@
+-->A common mistake when using the type long long is that the type int is still
+used somewhere in the code. For example, the following code contains a subtle
+error:
+int a = 123456789;
+long long b = a*a;
+cout << b << "\n"; // -1757895751
+
+~Even though the variable b is of type long long, both numbers in the expression a*a are of type int and the result is also of type int. Because of this, the
+variable b will contain a wrong result. The problem can be solved by changing
+the type of a to long long or by changing the expression to (long long)a*a
+
+~Modular arithmetic
+We denote by x mod m the remainder when x is divided by m. For example,
+17 mod 5 = 2, because 17 = 3·5+2.
+Sometimes, the answer to a problem is a very large number but it is enough
+to output it ”modulo m”, i.e., the remainder when the answer is divided by m (for
+6
+example, ”modulo 109 + 7”). The idea is that even if the actual answer is very
+large, it suffices to use the types int and long long.
+An important property of the remainder is that in addition, subtraction and
+multiplication, the remainder can be taken before the operation:
+(a+ b) mod m = (a mod m+ b mod m) mod m
+(a− b) mod m = (a mod m− b mod m) mod m
+(a· b) mod m = (a mod m· b mod m) mod m
+
+~Floating point numbers
+The usual floating point types in competitive programming are the 64-bit double
+and, as an extension in the g++ compiler, the 80-bit long double. In most cases,
+double is enough, but long double is more accurate.
+
+
+
+~A difficulty when using floating point numbers is that some numbers cannot
+be represented accurately as floating point numbers, and there will be rounding
+errors. For example, the result of the following code is surprising:
+double x = 0.3*3+0.1;
+printf("%.20f\n", x); // 0.99999999999999988898
+7
+Due to a rounding error, the value of x is a bit smaller than 1, while the correct
+value would be 1.
+It is risky to compare floating point numbers with the == operator, because it
+is possible that the values should be equal but they are not because of precision
+errors. A better way to compare floating point numbers is to assume that two
+numbers are equal if the difference between them is less than ε, where ε is a
+small number.
+In practice, the numbers can be compared as follows (ε = 10−9
+):
+if (abs(a-b) < 1e-9) {
+// a and b are equal
+}
