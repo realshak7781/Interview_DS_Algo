@@ -1,0 +1,25 @@
+--> the newline "\n" works faster than endl, because endl always
+causes a flush operation.
+
+-->Sometimes the program should read a whole line from the input, possibly
+containing spaces. This can be accomplished by using the getline function:
+string s;
+getline(cin, s);
+
+
+-->If the amount of data is unknown, the following loop is useful:
+while (cin >> x) {
+// code
+}
+This loop reads elements from the input one after another, until there is no more
+data available in the input.
+
+-->In some contest systems, files are used for input and output. An easy solution
+for this is to write the code as usual using standard streams, but add the following
+lines to the beginning of the code:
+freopen("input.txt", "r", stdin);
+freopen("output.txt", "w", stdout);
+After this, the program reads the input from the file ”input.txt” and writes the
+output to the file ”output.txt”.
+
+-->
