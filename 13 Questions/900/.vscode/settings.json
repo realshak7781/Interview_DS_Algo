@@ -1,0 +1,15 @@
+{
+    "json.schemas": [],
+    "launch": {
+        "configurations": [],
+        "compounds": []
+    },
+    "editor.quickSuggestions": {
+        "comments": "on",
+        "strings": "on"
+    },
+    "editor.suggestOnTriggerCharacters": false,
+    "editor.acceptSuggestionOnEnter": "off",
+    "editor.parameterHints.enabled": false,
+    "editor.inlineSuggest.enabled": false
+}
