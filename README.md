@@ -1,7 +1,4 @@
 
-Here's your enhanced version with emojis to make it more engaging:  
-
----
 
 # 🚀 Competitive Programming from Scratch  
 
