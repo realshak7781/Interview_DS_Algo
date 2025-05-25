@@ -1,0 +1,38 @@
+class Solution {
+public:
+    int longestPalindrome(vector<string>& words) {
+        unordered_map<string,int> freq;
+
+        for(auto &s:words) freq[s]++;
+
+        int len=0;
+        bool hasMiddle=false;
+        for(auto &it:freq){
+            string s=it.first;
+            int count=it.second;
+            string mirr=s;
+            reverse(mirr.begin(),mirr.end());
+            if(s!=mirr){
+                // cl,lc
+                if(freq.count(mirr)){
+                    int pairs=min(freq[s],freq[mirr]);
+                    len+=(pairs*4);
+                    freq[s]-=pairs;
+                    freq[mirr]-=pairs;
+                }
+            }
+            else if(s==mirr){
+                //gg,xx,cc
+                int pairs=freq[s]/2;
+                len+=(pairs*4);
+                freq[s]-=pairs*2;
+
+                if(freq[s]%2==1) hasMiddle=true;
+            }
+        }
+
+        if(hasMiddle) len+=2;
+
+        return len;
+    }
+};
