@@ -1,0 +1,20 @@
+
+Longest Increasing Subsequence (LIS) — Quick Revision
+Algorithm:
+• Basic DP:
+    ◦ dp[i] = length of LIS ending at index i
+    ◦ For each i, check all previous j < i where arr[j] < arr[i] and update:
+dp[i] = max(dp[i], dp[j] + 1)
+    ◦ Final answer = max(dp)
+    ◦ Time: O(n²)
+• Optimized with Binary Search:
+    ◦ Maintain a tails array where tails[i] = smallest possible tail of all increasing subsequences of length i+1.
+    ◦ For each element:
+        ▪ Use binary search on tails to find correct position.
+    ◦ Time: O(n log n)
+Use Cases (Interviews / OAs):
+• Pure LIS problems (e.g., "Longest Increasing Subsequence", "Number of LIS" on Leetcode)
+• Envelope Nesting (e.g., Russian Doll Envelopes)
+• Box Stacking (multi-dimensional LIS)
+• Job Scheduling (after sorting by one dimension, apply LIS)
+• Building Bridges (classic DP variant)
