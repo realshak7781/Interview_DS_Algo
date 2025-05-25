@@ -1,0 +1,47 @@
+// VISIT MY NOTION FOR MORE SUCH TIPS: https://www.notion.so/1d226cb2bf3f80fba94ee0fc9f28bc65?v=1d226cb2bf3f81af8c52000c55f75d7a
+
+
+📝 Count of Range Sum – STL Concepts & Common Pitfall
+✅ Problem Recap
+Given an integer array nums and two integers lower and upper, count the number of range sums (i, j) such that:
+
+lower ≤ sum(nums[i..j]) ≤ upper
+
+🧰 Key STL Concepts Used
+1. std::multiset
+• ✅ Stores elements in sorted order.
+• ✅ Allows duplicate elements.
+• ✅ Provides efficient O(log n) operations for insertions and range queries.
+• 🎯 Use Case Here: Storing prefix sums to efficiently count valid ranges.
+2. insert(val)
+• Inserts value in the multiset while maintaining sorted order.
+
+prefixSet.insert(curSum);
+
+3. lower_bound(val)
+• Returns iterator to first element ≥ val
+• Used to include the lower bound of the target range.
+4. upper_bound(val)
+• Returns iterator to first element > val
+• Used to exclude the upper bound.
+
+auto it1 = prefixSet.lower_bound(curSum - upper);
+auto it2 = prefixSet.upper_bound(curSum - lower);
+
+5. std::distance(it1, it2)
+• Returns the number of elements between two iterators.
+• 🚨 BUG: You did std::distance(it2, it1) in the wrong order:
+
+count += std::distance(it1, it2);  // ❌ wrong
+count += std::distance(it2, it1);  // ✅ correct
+
+Because it2 is the start of range and it1 is the end — order matters!
+❗️Common Mistake (Bug Recap)
+• ❌ Reversed iterators in std::distance(it1, it2) gave incorrect count, possibly negative.
+• ✅ Fix: Always use std::distance(start, end) where start <= end.
+📌 Final Code Snippet (Corrected)
+
+auto it1 = prefixSet.lower_bound(curSum - upper);
+auto it2 = prefixSet.upper_bound(curSum - lower);
+count += std::distance(it1, it2);  // ✅ Correct order
+
