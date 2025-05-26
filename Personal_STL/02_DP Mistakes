@@ -1,0 +1,12 @@
+
+⚠️ Common Mistake: Using s.substr(i) + unordered_map<string, int> for DP
+Problem:
+
+Using s.substr(i) in recursive calls and memoizing with unordered_map<string, int> causes excessive memory usage.
+Why it's bad:
+• s.substr(i) creates new heap-allocated strings → leads to O(N²) copies for a string of length N.
+• Using string as a key in a map stores duplicate overlapping substrings → results in high memory (MLE).
+Better Approach:
+✅ Use indices (start, end) instead of substrings.
+
+✅ Memoize using a vector dp or dp[start][end] if needed.
