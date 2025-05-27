@@ -1,0 +1,25 @@
+
+
+// Min Heap using custom struct with comparator (based on weight)
+struct Node {
+    int weight, i, j;
+};
+
+// Comparator for Min Heap: returns true if 'a' has higher weight than 'b'
+struct Compare {
+    bool operator()(const Node& a, const Node& b) {
+        return a.weight > b.weight;  // smaller weight gets higher priority
+    }
+};
+
+// Usage
+priority_queue<Node, vector<Node>, Compare> minHeap;
+
+🧠 Short Note to RememberUse a > b to make a Min Heap → puts the smaller element on top.
+
+Just memorize: > = Min Heap, < = Max Heap (default).
+🧾 Copy & Reuse
+Whenever you need a min heap based on a custom field (like weight), just copy this snippet and change:
+• Node to your struct/class name
+• weight to your comparison field
+\
