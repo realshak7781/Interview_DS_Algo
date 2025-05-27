@@ -1,0 +1,28 @@
+class Solution {
+int optimised(int n,int m){
+    int totalSum=n*(n+1)/2;
+
+    int totalDivisible=n/m;
+    int num2 = (totalDivisible * m * (1 + totalDivisible)) / 2;
+
+    return (totalSum-2*num2);
+}    
+public:
+    int differenceOfSums(int n, int m) {
+        // int num1=0,num2=0;
+
+        // for(int i=1;i<=n;i++){
+        //     if(i%m==0){
+        //         // divisble by m
+        //         num2+=i;
+        //     }
+        //     else{
+        //         num1+=i;
+        //     }
+        // }
+
+        // return num1-num2;
+
+        return optimised(n,m);
+    }
+};
