@@ -1,0 +1,44 @@
+class Solution {
+private:
+int dfs(unordered_map<int,vector<int>>&adjList,int src,int dist,int parent){
+    if(dist<0) return 0;
+    int count=1;
+
+    for(auto &neigh:adjList[src]){
+        if(neigh!=parent){
+         count=count+dfs(adjList,neigh,dist-1,src);
+        }
+    }
+    return count;
+}    
+public:
+    vector<int> maxTargetNodes(vector<vector<int>>& edges1, vector<vector<int>>& edges2, int k) {
+        int n=edges1.size()+1;
+        int m=edges2.size()+1;
+        unordered_map<int,vector<int>> adjList2;
+        unordered_map<int,vector<int>> adjList1;
+        for(auto &it:edges2){
+            adjList2[it[0]].push_back(it[1]);
+            adjList2[it[1]].push_back(it[0]);
+        }
+         for(auto &it:edges1){
+            adjList1[it[0]].push_back(it[1]);
+            adjList1[it[1]].push_back(it[0]);
+        }
+
+           int count2=0;
+            for(int j=0;j<m;j++){
+            //    count2 is max nodes can be reached using k-1 steps
+                count2=max(count2,dfs(adjList2,j,k-1,-1));
+            }
+        
+
+        // also count reachable nodes with k int the same tree
+          // total nodes;
+        vector<int> answer(n,0);
+        for(int i=0;i<n;i++){
+            answer[i]=dfs(adjList1,i,k,-1)+count2;
+        }
+        return answer;
+    }
+};
