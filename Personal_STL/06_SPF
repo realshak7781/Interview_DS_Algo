@@ -1,0 +1,43 @@
+
+📘 SPF (Smallest Prime Factor) – Quick Notes
+🔍 Definition:
+• SPF[i] = the smallest prime number that divides i.
+• For a prime number p, SPF[p] = p.
+🚀 Why Use SPF?
+• Efficient prime factorization of any number in O(log n) time.
+• Faster than trial division (O(√n)).
+• Useful in problems involving:
+    ◦ Multiple queries
+    ◦ Prime factor connections (e.g., DSU problems)
+    ◦ Optimization over Sieve of Eratosthenes when factors are needed
+⚙️ Technique: Precomputing SPF using Modified Sieve
+
+vector<int> spf(n + 1);
+for (int i = 0; i <= n; i++) spf[i] = i;
+
+for (int i = 2; i * i <= n; i++) {
+    if (spf[i] == i) { // i is prime
+        for (int j = i * i; j <= n; j += i) {
+            if (spf[j] == j) {
+                spf[j] = i;  // Set smallest prime factor
+            }
+        }
+    }
+}
+
+🔄 How to Factorize a Number Using SPF
+
+int x = num;
+unordered_set<int> factors;
+while (x > 1) {
+    factors.insert(spf[x]);
+    x /= spf[x];
+}
+
+• Guarantees distinct prime factors.
+• Time: O(log x) per number
+⏱️ Time & Space ComplexityTaskComplexitySPF PreprocessingO(N log log N)Factorization per numberO(log N)SpaceO(N)
+✅ Use SPF When:
+• You need distinct prime factors of many numbers.
+• You're solving problems like LeetCode 952 (Largest Component Size by Common Factor).
+• You want to optimize over regular Sieve for factorization.
