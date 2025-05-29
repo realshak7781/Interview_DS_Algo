@@ -1,0 +1,59 @@
+class Solution {
+private:
+void dfs(unordered_map<int,vector<int>>&adjList,vector<int>&arr,int mark,int src, int parent){
+    arr[src]=mark;
+
+    for(auto &neigh:adjList[src]){
+        if(neigh==parent) continue;
+        dfs(adjList,arr,1-mark,neigh,src);
+    }
+}
+public:
+    vector<int> maxTargetNodes(vector<vector<int>>& edges1,
+                               vector<vector<int>>& edges2) {
+        int n = edges1.size() + 1;
+        int m = edges2.size() + 1;
+        unordered_map<int, vector<int>> adjList2;
+        unordered_map<int, vector<int>> adjList1;
+        for (auto& it : edges2) {
+            adjList2[it[0]].push_back(it[1]);
+            adjList2[it[1]].push_back(it[0]);
+        }
+        for (auto& it : edges1) {
+            adjList1[it[0]].push_back(it[1]);
+            adjList1[it[1]].push_back(it[0]);
+        }
+
+        // for the first tree count the no of nodes reachable from each node
+        vector<int> even(n,0);
+        // same for second tree
+        vector<int> odd(m,0);
+
+        dfs(adjList1,even,0,0,-1);
+        dfs(adjList2,odd,0,0,-1);
+
+        // find max in odd array
+        int zeroCount=0,oneCount=0;
+        for(int &val:odd){
+            if(val==0) zeroCount++;
+            else oneCount++;
+        }
+        int maxi=max(zeroCount,oneCount);
+
+        zeroCount=0,oneCount=0;
+         for(int &val:even){
+            if(val==0) zeroCount++;
+            else oneCount++;
+        }
+        vector<int> answer(n);
+        for(int i=0;i<n;i++){
+            if(even[i]==0){
+                answer[i]=zeroCount+maxi;
+            }
+            else{
+                answer[i]=oneCount+maxi;
+            }
+        }
+        return answer;
+    }
+};
