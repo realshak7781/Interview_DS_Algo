@@ -1,0 +1,43 @@
+### General Note on Approach for "Reachable Nodes In Subdivided Graph"
+
+1. Graph Representation:
+- Treat edges [u, v, cnt] as weighted edges with weight cnt + 1.
+- cnt accounts for intermediate nodes.
+- +1 accounts for the direct connection between u and v.
+
+2. Use Dijkstra's Algorithm:
+- Start from node 0 and compute the shortest distance to all other original nodes.
+- Track remaining moves (maxMoves - dist[u]) at each node.
+
+3. Count Reachable Nodes:
+- Original Nodes: Count all nodes whose shortest distance ≤ maxMoves.
+- Intermediate Nodes: For each edge [u, v, cnt]:
+- Calculate how far you can reach from u toward v (remaining_u = maxMoves - dist[u]).
+- Calculate how far you can reach from v toward u (remaining_v = maxMoves - dist[v]).
+- Total reachable intermediate nodes = min(cnt, remaining_u + remaining_v).
+
+4. Avoid Double Counting:
+- Ensure intermediate nodes are not counted twice (once from u and once from v).
+
+5. Output:
+- Sum up the counts of reachable original and intermediate nodes.
+
+---
+
+### Key Observations:
+- Use weights to avoid explicitly subdividing the graph.
+- Dijkstra's algorithm efficiently handles weighted edges and large graphs.
+- Intermediate nodes are counted based on remaining moves without simulating them explicitly.
+
+---
+
+### Complexity:
+- Time: $O((V + E) \log V)$, where $V$ is the number of nodes and $E$ is the number of edges.
+- Space: $O(V + E)$ for the adjacency list and priority queue.
+
+---
+
+### Why This Approach Works:
+- Compact representation using weights avoids large graph sizes.
+- Efficient traversal and counting using Dijkstra's algorithm.
+- Simplifies intermediate node counting by leveraging remaining moves.
