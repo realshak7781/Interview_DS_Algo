@@ -1,0 +1,3 @@
+Whenever you have to deal with running product, but the algo uses running sums.
+Convert the products to sums using c++ log function:
+log(a * b * c) = log(a) + log(b) + log(c)
