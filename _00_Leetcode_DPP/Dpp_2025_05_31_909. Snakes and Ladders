@@ -1,0 +1,42 @@
+class Solution {
+public:
+    int snakesAndLadders(vector<vector<int>>& board) {
+        // problem can be solved using BFS
+        int n = board.size();
+        queue<pair<int, int>> q;
+        q.push({1, 0});
+        int target = n * n;
+        vector<bool> vis(target + 1, false);
+
+        vis[1] = true;
+
+        while (!q.empty()) {
+            int size = q.size();
+
+            for (int i = 0; i < size; i++) {
+                auto [curr, steps] = q.front();
+                q.pop();
+
+                if (curr == target)
+                    return steps;
+
+                for (int neigh = curr + 1; neigh <= min(curr + 6, target);
+                     neigh++) {
+                    int row = (neigh - 1) / n;
+                    int col = (neigh - 1) % n;
+                    if (row & 1)col = n - 1 - col;
+                    int actualRow = n - 1 - row;
+                    int matVal = board[actualRow][col];
+
+                    int dest = (matVal != -1) ? matVal : neigh;
+                    if (!vis[dest]) {
+                        vis[dest] = true;
+                        q.push({dest, steps + 1});
+                    }
+                }
+            }
+        }
+
+        return -1;
+    }
+};
