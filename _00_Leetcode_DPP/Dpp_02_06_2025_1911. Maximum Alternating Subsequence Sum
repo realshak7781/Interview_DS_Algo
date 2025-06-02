@@ -1,0 +1,21 @@
+using ll=long long;
+class Solution {
+private:
+vector<vector<ll>> dp; 
+ll solve(int index,int parity,vector<int>&nums){
+    if (index == nums.size()) return 0;
+
+    if(dp[index][parity]!=-1) return dp[index][parity];
+    ll curVal = (parity == 0 ? nums[index] : -nums[index]);
+    ll pick=curVal+solve(index+1,1-parity,nums);
+    ll notPick=0+solve(index+1,parity,nums);
+
+    return dp[index][parity]=max(pick,notPick);
+}   
+public:
+    long long maxAlternatingSum(vector<int>& nums) {
+        int n=nums.size();
+        dp.resize(n,vector<ll>(2,-1));
+        return solve(0,0,nums);
+    }
+};
