@@ -1,0 +1,35 @@
+class Solution {
+public:
+    int longestSubsequence(vector<int>& arr, int difference) {
+        int n = arr.size();
+        vector<int> dp(n, 1);
+        unordered_map<int, int> mp;
+
+        for (int i = 0; i < n; i++) {
+            int cur = arr[i];
+            // for(int j=0;j<i;j++){
+            //     if((cur-arr[j])==difference){
+            //         dp[i]=max(dp[i],dp[j]+1);
+            //     }
+            // }
+            // bringing the time complexity to O(n)
+
+            int prev = cur - difference;
+            int maxIndex = i;
+            if (mp.count(prev)) {
+
+                dp[i] = max(dp[i], dp[mp[prev]] + 1);
+                if (mp.count(cur)) {
+                    // collision handling
+                    maxIndex = (dp[mp[cur]] <= dp[i]) ? i : mp[cur];
+                }
+            }
+
+            mp[cur] = maxIndex;
+        }
+
+        int maxLen = *max_element(dp.begin(), dp.end());
+
+        return maxLen;
+    }
+};
