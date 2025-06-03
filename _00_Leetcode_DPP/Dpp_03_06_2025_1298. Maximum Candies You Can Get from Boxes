@@ -1,0 +1,77 @@
+class Solution {
+private:
+    vector<bool> vis;
+    unordered_set<int> foundBox;
+    // int dfs(int box,vector<int>& status, vector<int>& candies,
+    // vector<vector<int>>& keys, vector<vector<int>>& containedBoxes){
+    //     if(vis[box]) return 0;
+    //     if(status[box]==0){
+    //         // box close but can be opened in future
+    //         foundBox.insert(box);
+    //         return 0;
+    //     }
+    //     vis[box]=true;
+    //     int cand=candies[box];
+
+    //     for(int boxN:containedBoxes[box]){
+    //         cand+=dfs(boxN,status,candies, keys, containedBoxes);
+    //     }
+
+    //     for(int &boxKey:keys[box]){
+    //         status[boxKey]=1;
+
+    //         if(foundBox.count(boxKey)){
+    //             cand+=dfs(boxKey,status,candies, keys, containedBoxes);
+    //         }
+    //     }
+
+    //     return cand;
+    // }
+public:
+    int maxCandies(vector<int>& status, vector<int>& candies,
+                   vector<vector<int>>& keys,
+                   vector<vector<int>>& containedBoxes,
+                   vector<int>& initialBoxes) {
+        int totalBox = candies.size();
+        vis.resize(totalBox, false);
+        int maxCands = 0;
+
+        // BFS approach
+        queue<int> q;
+        for (int& box : initialBoxes) {
+            foundBox.insert(box);
+            if (status[box] == 1) {
+                q.push(box);
+            }
+        }
+
+        while (!q.empty()) {
+            int frontBox = q.front();
+            q.pop();
+
+            if (vis[frontBox])
+                continue;
+            vis[frontBox] = true;
+            maxCands += candies[frontBox];
+            for (int neighBox : containedBoxes[frontBox]) {
+
+                if (!vis[neighBox]) {
+                    if (status[neighBox] == 1) {
+                        q.push(neighBox);
+                    } else {
+                        foundBox.insert(neighBox);
+                    }
+                }
+            }
+
+            for (int& boxKey : keys[frontBox]) {
+                status[boxKey] = 1;
+                if (foundBox.count(boxKey)) {
+                    q.push(boxKey);
+                }
+            }
+        }
+
+        return maxCands;
+    }
+};
