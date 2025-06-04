@@ -1,0 +1,57 @@
+class Solution {
+private:
+int targetSize;
+vector<int> peopleBit;
+vector<int> res; 
+
+void solve(int idx,int mask,vector<int> &temp){
+    if(idx>=peopleBit.size()){
+        if(mask==targetSize){
+            if(res.size()==0 || temp.size()<=res.size()){
+                res=temp;
+            }
+        }
+        return;
+    }
+
+    if(res.size()!=0 && temp.size()>=res.size()) return;
+
+    // not pick current guy
+    solve(idx+1,mask,temp);
+
+    // guy has no skills no need to add
+    if((mask|peopleBit[idx])==mask) return ;
+
+    // pick the current guy
+    temp.push_back(idx);
+    solve(idx+1,mask|peopleBit[idx],temp);
+    temp.pop_back();
+}
+
+public:
+    vector<int> smallestSufficientTeam(vector<string>& req_skills, vector<vector<string>>& people) {
+        int n=req_skills.size();
+
+        peopleBit.resize(people.size(),0);
+        res={};
+
+        targetSize=(1<<n)-1;
+        unordered_map<string,int> skMap;
+        for(int i=0;i<n;i++){
+            skMap[req_skills[i]]=i;
+        }
+        
+        for(int i=0;i<people.size();i++){
+            int skillBit=0;
+            for(auto sk:people[i]){
+                int index=skMap[sk];
+                skillBit=skillBit|(1<<index);
+            }
+            peopleBit[i]=skillBit;
+        }
+        vector<int> temp;
+        solve(0,0,temp);
+
+        return res;
+    }
+};
