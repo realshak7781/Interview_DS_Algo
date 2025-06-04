@@ -1,0 +1,21 @@
+class Solution {
+private:
+unordered_map<int,int> dp;
+    int findNth(int n) {
+        if (n == 0)
+            return 0;
+        if (n == 1)
+            return 1;
+        if (n == 2)
+            return 1;
+        if (dp.count(n))
+            return dp[n];
+        int k = n - 3;
+        return dp[n] = (tribonacci(k) + tribonacci(k + 1) + tribonacci(k + 2));
+    }
+
+public:
+    int tribonacci(int n) { 
+        return findNth(n); 
+        }
+};
