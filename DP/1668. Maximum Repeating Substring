@@ -1,0 +1,40 @@
+class Solution {
+private:
+int optimised(string &sequence,string &word){
+    if(word==sequence) return 1;
+
+    string cur=word;
+    int k=0;
+    while(sequence.find(cur)!=string::npos){
+        k++;
+        cur+=word;
+    }
+    return k;
+}    
+public:
+    int maxRepeating(string sequence, string word) {
+// BRUTE FORCE APPROACH BELOW:
+
+        // unordered_set<string> vis;
+        // int n=sequence.length();
+        // for(int i=0;i<n;i++){
+        //     for(int len=1;len<=n-i;len++){
+        //         string sub=sequence.substr(i,len);
+        //         vis.insert(sub);
+        //     }
+        // }
+
+        // int kVal=0;
+        // string cur=word;
+        // while(cur.length()<=sequence.length()){
+        //     if(vis.count(cur)){
+        //         kVal++;
+        //     }
+        //     cur+=word;
+        // }
+
+        // return kVal;
+
+        return optimised(sequence,word);
+    }
+};
