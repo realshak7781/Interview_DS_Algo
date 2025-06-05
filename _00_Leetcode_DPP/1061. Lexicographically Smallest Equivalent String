@@ -1,0 +1,53 @@
+class disjointSet{
+    private:
+    vector<char> parent;
+    public:
+    disjointSet(){
+        parent.resize(26);
+        for(int i=0;i<26;i++){
+            parent[i]='a'+i;
+        }
+    }
+
+        char findUPar(char node){
+            if(node==parent[node-'a']) return node;
+           return parent[node-'a']=findUPar(parent[node-'a']); /* path compression step */
+        }
+
+        void unionByLexOrd(char u,char v){
+            char ulpU=findUPar(u);
+            char ulpV=findUPar(v);
+
+            if(ulpU==ulpV) return;
+
+            if(ulpU<ulpV){
+                parent[ulpV-'a']=ulpU;
+            }
+            else{
+                parent[ulpU-'a']=ulpV;
+            }
+        }
+    
+};
+
+// TIME COMPLEXITY:O(LEN*ALPHA(26))+O(BASESTR.LEN*ALPHA(26))
+// SPACE COMPLEXITY: O(26)+o(BASESTR.LEN)
+class Solution {
+public:
+    string smallestEquivalentString(string s1, string s2, string baseStr) {
+        disjointSet ds;
+        int len=s1.length();
+
+        for(int i=0;i<len;i++){
+            ds.unionByLexOrd(s1[i],s2[i]);
+        }
+
+        string res="";
+        for(int i=0;i<baseStr.length();i++){
+            char p=ds.findUPar(baseStr[i]);
+            res+=p;
+        }
+
+        return res;
+    }
+};
