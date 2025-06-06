@@ -1,0 +1,3 @@
+KMP (Knuth-Morris-Pratt) is amazing for *needle-in-haystack* string matching because it avoids redundant comparisons by precomputing a "prefix table" (LPS array).
+It scans the text in linear time O(n + m), where $n$ is the haystack and m is the needle length.
+This makes it ideal for searching patterns efficiently, even in large texts.
