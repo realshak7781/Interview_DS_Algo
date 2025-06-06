@@ -1,0 +1,3 @@
+**Rabin-Karp** is a clever string matching algorithm that uses hashing to find a pattern (needle) in a text (haystack).
+It computes hash values to quickly compare substrings, making it efficient for multiple pattern searches.
+You should learn it because it introduces rolling hash concepts, useful in plagiarism detection, document search, and many coding interviews.
