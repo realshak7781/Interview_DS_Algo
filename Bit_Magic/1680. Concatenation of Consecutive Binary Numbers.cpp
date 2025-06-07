@@ -21,22 +21,20 @@ public:
 // S.C : O(1)
 
 
-✅ 1. Logarithmic FunctionsFunctionDescriptionReturn Typelog(x)Natural log (base e) of xdoublelog10(x)Common log (base 10) of xdoublelog2(x)Binary log (base 2) of xdoublelog1p(x)Computes log(1 + x) with higher precision for small xdouble
-🔹 Examples:
+✅ 1. Logarithmic Functions
 
 cout << log(10);      // Natural log of 10
 cout << log10(100);   // log base 10 => 2
 cout << log2(8);      // log base 2 => 3
 cout << log1p(0.0001); // more accurate than log(1 + 0.0001)
 
-✅ 2. Exponential FunctionsFunctionDescriptionReturn Typeexp(x)Calculates e^xdoubleexp2(x)Calculates 2^xdoubleexpm1(x)Computes e^x - 1 accurately for small xdouble
+✅ 2. Exponential Functions
 🔹 Examples:
 
 cout << exp(1);       // e^1 ≈ 2.718
 cout << exp2(3);      // 2^3 = 8
 cout << expm1(0.001); // more accurate than exp(0.001) - 1
 
-✅ 3. Related UtilitiesFunctionDescriptionpow(x, y)Computes x^ysqrt(x)Computes square root of xcbrt(x)Computes cube root of xhypot(x, y)Computes sqrt(x² + y²) safely
 
 
 
