@@ -40,17 +40,39 @@ private:
         return dp[0][0]; 
     }
 
+int bottomUp(vector<int>&nums,int k){
+    int n=nums.size();
+    vector<int> vec(n);
+
+    for(int i=0;i<n;i++){
+        vec[i]=nums[i];
+    }
+
+    for(int i=0;i<n;i++){
+        for(int j=i-1;j>=0 && (i-j)<=k;j--){
+            vec[i]=max(vec[i],nums[i]+vec[j]);
+        }
+    }
+
+    int res=*max_element(vec.begin(),vec.end());
+
+    return res;
+}
+
 public:
     int constrainedSubsetSum(vector<int>& nums, int k) {
-        int n = nums.size();
-        int maxi = *max_element(nums.begin(), nums.end());
+        // int n = nums.size();
+        // int maxi = *max_element(nums.begin(), nums.end());
         // all neg case
-        int val = tab(nums, k);
+        // int val = tab(nums, k);
 
-        if (val == 0)
-            return maxi;
+        // if (val == 0)
+        //     return maxi;
 
-        else
-            return val;
+        // else
+        //     return val;
+
+
+        return bottomUp(nums,k);
     }
 };
