@@ -37,27 +37,59 @@ private:
             }
         }
 
-        return dp[0][0]; 
+        return dp[0][0];
     }
 
-int bottomUp(vector<int>&nums,int k){
-    int n=nums.size();
-    vector<int> vec(n);
+    int bottomUp(vector<int>& nums, int k) {
+        int n = nums.size();
+        vector<int> vec(n);
 
-    for(int i=0;i<n;i++){
-        vec[i]=nums[i];
-    }
-
-    for(int i=0;i<n;i++){
-        for(int j=i-1;j>=0 && (i-j)<=k;j--){
-            vec[i]=max(vec[i],nums[i]+vec[j]);
+        for (int i = 0; i < n; i++) {
+            vec[i] = nums[i];
         }
+
+        for (int i = 0; i < n; i++) {
+            for (int j = i - 1; j >= 0 && (i - j) <= k; j--) {
+                vec[i] = max(vec[i], nums[i] + vec[j]);
+            }
+        }
+
+        int res = *max_element(vec.begin(), vec.end());
+
+        return res;
     }
 
-    int res=*max_element(vec.begin(),vec.end());
 
-    return res;
-}
+    using p = pair<int, int>;
+    int optimised(vector<int>& nums, int k) {
+        int n = nums.size();
+        vector<int> vec(n);
+
+        for (int i = 0; i < n; i++) {
+            vec[i] = nums[i];
+        }
+
+        priority_queue<p> maxHeap;
+        maxHeap.push({nums[0],0});
+
+        for (int i = 1; i < n; i++) {
+            // for (int j = i - 1; j >= 0 && (i - j) <= k; j--) {
+            //     vec[i] = max(vec[i], nums[i] + vec[j]);
+            // }
+            // the above is the culprit code need to reduce its complexity
+
+            int curSum=nums[i];
+            while((i-maxHeap.top().second)>k)maxHeap.pop();
+
+            curSum+=maxHeap.top().first;
+            vec[i]=max(vec[i],curSum);
+            maxHeap.push({vec[i],i});
+        }
+
+        int res = *max_element(vec.begin(), vec.end());
+
+        return res;
+    }
 
 public:
     int constrainedSubsetSum(vector<int>& nums, int k) {
@@ -72,7 +104,8 @@ public:
         // else
         //     return val;
 
+        // return bottomUp(nums, k);
 
-        return bottomUp(nums,k);
+        return optimised(nums,k);
     }
 };
