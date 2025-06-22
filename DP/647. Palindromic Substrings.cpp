@@ -1,3 +1,39 @@
+
+// approach 3:
+class Solution {
+public:
+    int countSubstrings(string s) {
+        int n=s.length();
+
+
+        int count=0;
+        bool t[1001][1001];
+        memset(t,false,sizeof(t));
+        for(int len=1;len<=n;len++){
+
+            for(int i=0;i+len-1<n;i++){
+                int j=i+len-1;
+
+                if(len==1){
+                    t[i][j]=true;
+                }
+                else if(len==2){
+                    t[i][j]=(s[i]==s[j]);
+                }
+                else{
+                    t[i][j]=(s[i]==s[j] && t[i+1][j-1]);
+                }
+
+                if(t[i][j]) count++;
+            }
+        }
+
+        return count;
+    }
+};
+
+
+// approach 2:
 class Solution {
 private:
 vector<vector<int>> dp;
