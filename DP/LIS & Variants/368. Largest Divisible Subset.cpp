@@ -1,4 +1,47 @@
 
+// BOTTOM UP APPROACH:
+
+class Solution {
+public:
+    vector<int> largestDivisibleSubset(vector<int>& nums) {
+        int n=nums.size();
+        sort(nums.begin(),nums.end());
+        // sorting helps to check divisibility in one direction
+
+        vector<int> t(n,1);
+        vector<int> prevIdx(n,-1);
+        int maxLen=1;
+        for(int i=0;i<n;i++){
+            for(int j=0;j<i;j++){
+
+                if(nums[i] % nums[j] == 0 && t[i]<t[j]+1){
+                    t[i]=t[j]+1;
+                    prevIdx[i]=j;
+                }
+            }
+            maxLen=max(maxLen,t[i]);
+        }
+
+        int lastIdx=-1;
+        for(int i=0;i<n;i++){
+            int len=t[i];
+            if(maxLen==len){
+                lastIdx=i;
+                break;
+            }
+        }
+
+        vector<int> res;
+        while(lastIdx!=-1){
+            res.push_back(nums[lastIdx]);
+            lastIdx=prevIdx[lastIdx];
+        }
+
+        reverse(res.begin(),res.end());
+
+        return res;
+    }
+};
 
 
 
