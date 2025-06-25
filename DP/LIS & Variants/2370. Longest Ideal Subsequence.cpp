@@ -3,7 +3,7 @@
 
 //RECURSION+MEMO 
 // T.C: O(N*26)
-//S.C: O(N*26)
+//S.C: O(N*26)+O(N)
 class Solution {
 private:
 int n;
