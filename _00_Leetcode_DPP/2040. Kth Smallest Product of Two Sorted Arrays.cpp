@@ -1,7 +1,7 @@
 
 
 
-// BRUTE FORCE APPROACH
+// BRUTE FORCE APPROACH : TLE
 T.C : O(N*M*LOG(K))
 S.C : O(K)
 using ll=long long;
