@@ -1,4 +1,31 @@
+// T.C: O(N)
+// S.C: O(1)
+class Solution {
+public:
+    int longestIdealString(string s, int k) {
+        int n=s.length();
 
+        //  a better optimised approach
+        vector<int> res(26,0);
+        for(int i=0;i<n;i++){
+
+            int curOrder=s[i]-'a';
+            int left=max(0,curOrder-k);
+            int right=min(25,curOrder+k);
+
+            int longest=0;
+            for(int j=left;j<=right;j++){
+                longest=max(longest,res[j]);
+            }
+
+            res[curOrder]=max(longest+1,res[curOrder]);
+        }
+
+        int result=*max_element(res.begin(),res.end());
+
+        return result;
+    }
+};
 
 
 //RECURSION+MEMO 
