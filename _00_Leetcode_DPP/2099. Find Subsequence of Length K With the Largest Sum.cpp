@@ -1,3 +1,43 @@
+// OPTIMAL : O(N) AVERAGE
+
+class Solution {
+public:
+    vector<int> maxSubsequence(vector<int>& nums, int k) {
+        int n=nums.size();
+        vector<int> temp=nums;
+
+        nth_element(temp.begin(),temp.begin()+k-1,temp.end(),greater<int>());
+
+        int kthLargest=temp[k-1];
+        int count=0;
+
+        for(int i=0;i<k;i++){
+            if(temp[i]==kthLargest) count++;
+        }
+
+        vector<int> res;
+        for(int i=0;i<n;i++){
+            if(res.size()==k) break;
+
+            if(nums[i]>kthLargest){
+                res.push_back(nums[i]);
+            }
+            else if(nums[i]==kthLargest){
+                if(count>0){
+                    res.push_back(nums[i]);
+                    count--;
+                }
+            }
+        }
+        return  res;
+    }
+};
+
+
+
+
+
+// BRUTE FORCE : O(NLOGK)
 using p=pair<int,int>;
 class Solution {  
 public:
