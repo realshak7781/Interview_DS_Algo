@@ -1,4 +1,39 @@
+// optimal
+// o(n)
+// o(1)
+class Solution {
+public:
+    int findLHS(vector<int>& nums) {
+        int n=nums.size();
+        sort(nums.begin(),nums.end());
+
+        int left=0;
+        int right=0;
+        int maxLen=0;
+
+        while(right<n){
+            int diff=nums[right]-nums[left];
+            if(diff==1){
+                maxLen=max(maxLen,right-left+1);
+                right++;
+            }
+            else if(diff<1){
+                right++;
+            }
+            else{
+                left++;
+            }
+        }
+
+        return maxLen;
+    }
+};
+
+
+
+
 // BETTER : O(NLOGN)
+// space : o(n)
 class Solution {
 public:
     int findLHS(vector<int>& nums) {
