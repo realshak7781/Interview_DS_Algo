@@ -1,6 +1,30 @@
 // WITHOUT USING NUMBERS ARRAY:
 
+class Solution {
+public:
+    vector<vector<int>> combine(int n, int k) {
+        vector<int> temp=vector<int>();
+        ncr(1,n,k,temp);
 
+        return res;
+    }
+
+    private:
+    vector<vector<int>> res;
+
+    void ncr(int idx,int n,int k,vector<int>&temp){
+        if(temp.size()==k){
+            res.push_back(temp);
+            return;
+        }
+
+        for(int i=idx;i<=n;i++){
+            temp.push_back(i);
+            ncr(i+1,n,k,temp);
+            temp.pop_back();
+        }
+    }
+};
 
 
 // USING THE NUMBERS ARRAY:
