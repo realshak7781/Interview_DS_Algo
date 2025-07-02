@@ -1,4 +1,89 @@
+// USING  A TRIE D.S.
 
+
+struct TrieNode{
+    char ch;
+    vector<TrieNode*> children;
+    bool isTerminal;
+
+    TrieNode(char c){
+        ch=c;
+        children.resize(26,nullptr);
+        isTerminal=false;
+    }
+};
+
+
+class Trie{
+    public:
+    TrieNode *root=new TrieNode('/');
+
+    void insert(string word){
+        TrieNode*node=root;
+        for(int i=0;i<word.length();i++){
+            int index=word[i]-'a';
+
+            if(!node->children[index]){
+                node->children[index]=new TrieNode(word[i]);
+            }
+            node=node->children[index];
+        }
+        node->isTerminal=true;
+    }
+
+    bool searchUtil(int idx,TrieNode*root,const string &word){
+        if(idx==word.length()){
+            return root->isTerminal;
+        }
+
+        char cur=word[idx];
+
+        if(cur=='.'){
+            // try all children which are not null
+
+            for(int i=0;i<26;i++){
+                if(root->children[i]){
+                    if(searchUtil(idx+1,root->children[i],word)) return true;
+                }
+            }
+        }
+        else{
+            int index=cur-'a';
+            if(!root->children[index]) return false;
+            return searchUtil(idx+1,root->children[index],word);
+        }
+
+        return false;
+    }
+
+
+    bool search(string word){
+        return searchUtil(0,root,word);
+    }
+};
+
+class WordDictionary {
+public:
+    Trie*t;
+    WordDictionary() {
+        t=new Trie();
+    }
+    
+    void addWord(string word) {
+        t->insert(word);
+    }
+    
+    bool search(string word) {
+        return t->search(word);
+    }
+};
+
+/**
+ * Your WordDictionary object will be instantiated and called as such:
+ * WordDictionary* obj = new WordDictionary();
+ * obj->addWord(word);
+ * bool param_2 = obj->search(word);
+ */
 
 
 // O(1) AVERAGE : BRUTE FORCE
