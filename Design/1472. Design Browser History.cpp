@@ -1,3 +1,57 @@
+// DLL APPROACH:
+
+struct Node{
+    string url;
+    Node*next;
+    Node*prev;
+
+    Node(string u){
+        url=u;
+        next=nullptr;
+        prev=nullptr;
+    }
+};
+class BrowserHistory {
+private:
+Node *head;
+Node*cur;    
+public:
+    BrowserHistory(string homepage) {
+        cur=head=new Node(homepage);
+    }
+    
+    void visit(string url) {
+         Node* nextPtr=cur->next;
+        if(nextPtr!=nullptr){
+            cur->next=nullptr;
+            nextPtr->prev=nullptr;
+        }
+
+        delete nextPtr;
+
+        cur->next=new Node(url);
+        cur->next->prev=cur;
+        cur=cur->next;
+    }
+    
+    string back(int steps) {
+        while(cur!=head && steps>0){
+            cur=cur->prev;
+            steps--;
+        }
+
+        return cur->url;
+    }
+    
+    string forward(int steps) {
+        while(cur->next!=nullptr && steps>0){
+            cur=cur->next;
+            steps--;
+        }
+
+        return cur->url;
+    }
+};
 
 
 
