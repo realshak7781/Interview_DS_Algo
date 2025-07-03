@@ -1,4 +1,91 @@
 
+// USING DLL
+struct Node{
+    int val;
+    Node*next;
+    Node*prev;
+
+    Node(int v){
+        val=v;
+        next=prev=nullptr;
+    }
+};
+class MyCircularQueue {
+private:
+Node*front;
+Node*rear;
+int count;  
+int k;  
+public:
+    MyCircularQueue(int k) {
+        front=rear=nullptr;
+        count=0;
+        this->k=k;
+    }
+    
+    bool enQueue(int value) {
+        if(isFull()) return false;
+
+        Node *newNode=new Node(value);
+        if(front==nullptr && rear==nullptr){
+            // first node'
+            front=rear=newNode;
+        }
+        else{
+            rear->next=newNode;
+            newNode->prev=rear;
+            rear=newNode;
+        }
+
+        count++;
+        return true;
+    }
+    
+    bool deQueue() {
+        if(isEmpty()) return false;
+
+        Node*cur=front;
+        if(front==rear){
+            // only one element left
+            front=rear=nullptr;
+        }else{
+             front=front->next;
+           cur->next->prev=nullptr;
+           cur->next=nullptr;
+        }
+
+        delete cur;
+        count--;
+        return true;
+    
+    }
+    
+    int Front() {
+        if(isEmpty()) return -1;
+
+        return front->val;
+    }
+    
+    int Rear() {
+       if(isEmpty()) return -1;
+
+       return rear->val; 
+    }
+    
+    bool isEmpty() {
+        if(count==0) return true;
+
+        return false;
+    }
+    
+    bool isFull() {
+        if(count==k) return true;
+
+        return false;
+    }
+};
+
+
 
 // APPROACH 1: USING K SIZED ARRAY
 class MyCircularQueue {
