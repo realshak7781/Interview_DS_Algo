@@ -1,3 +1,20 @@
+// OPTIMAL:
+class Solution {
+public:
+    char kthCharacter(int k) {
+        if(k==1) return 'a';
+
+        int len=1;
+        while(len*2<k) len*=2;
+
+        char cur=kthCharacter(k-len);
+
+        return (cur-'a'+1)%26+'a';
+        
+    }
+};
+
+// brute force: O(K*LOGK)
 class Solution {
 public:
     char kthCharacter(int k) {
