@@ -1,4 +1,28 @@
+// APPROACH 3:
 
+class Solution {
+private:
+
+int spaceOpt(int m,int n){
+   vector<int> prev(n,1);
+
+    for(int i=m-2;i>=0;i--){
+        vector<int>cur(n,0);
+        for(int j=n-1;j>=0;j--){
+            cur[j]=prev[j];
+            if(j+1<n)cur[j]+=cur[j+1];
+        }
+        prev=cur;
+    }
+
+    return prev[0];
+}
+
+public:
+    int uniquePaths(int m, int n) {
+        return spaceOpt(m,n);
+    }
+};
 
 
 
