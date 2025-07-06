@@ -1,4 +1,38 @@
 
+// using hashing
+class FindSumPairs {
+vector<int>nums1,nums2;
+unordered_map<int,int> freq;
+public:
+    FindSumPairs(vector<int>& nums1, vector<int>& nums2) {
+        this->nums1=nums1;
+        this->nums2=nums2;
+
+        for(int val:nums2)freq[val]++;
+    }
+     
+    void add(int index, int val) {
+        if(index>=nums2.size()) return;
+        int oldVal=nums2[index];
+        freq[oldVal]--;
+        nums2[index]+=val;
+        int newVal=nums2[index];
+        freq[newVal]++;
+    }
+    
+    int count(int tot) {
+        int cnt=0;
+        for(int i=0;i<nums1.size();i++){
+           int n2=tot-nums1[i];
+           cnt+=(freq[n2]);
+        }
+
+        return cnt;
+    }
+
+};
+
+
 
 
 //BRUTE FORCE : SORTING + BINARY SEARCH : TLE
