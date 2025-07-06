@@ -1,7 +1,7 @@
 
 
 
-//BRUTE FORCE : SORTING + BINARY SEARCH
+//BRUTE FORCE : SORTING + BINARY SEARCH : TLE
 class FindSumPairs {
 vector<int>nums1,nums2;
 public:
