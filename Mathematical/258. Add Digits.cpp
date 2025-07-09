@@ -1,4 +1,16 @@
+// OPTIMAL : o(1)
+class Solution {
+public:
+    int addDigits(int num) {
+        // read about DIGITAL ROOT OF A NO.
+        if(num==0) return num;
+        int rem=num%9;
 
+        if(rem==0) return 9;
+
+        return rem;
+    }
+};
 
 // brute force: O (LOG *LOG)
 class Solution {
