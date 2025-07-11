@@ -1,7 +1,7 @@
 
 
 
-// T.C: O(N)
+// T.C: O(N^2)
 // S.C : O(N)
 class Solution {
 public:
