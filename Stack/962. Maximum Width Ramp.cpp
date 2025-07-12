@@ -1,4 +1,23 @@
 
+// Better : O(n^2)
+class Solution {
+public:
+    int maxWidthRamp(vector<int>& nums) {
+        int n=nums.size();
+        int ramp=-1;
+        for(int j=n-1;j>=0;j--){
+            for(int i=0;i<j;i++){
+                if(nums[i]<=nums[j]){
+                    ramp=max(j-i,ramp);
+                    break;
+                }
+            }
+        }
+
+
+        return ramp==-1 ?0:ramp;
+    }
+};
 
 //brute force : O(N^2)
 class Solution {
