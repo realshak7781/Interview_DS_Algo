@@ -1,4 +1,33 @@
 
+// t.c : o(n) 
+// s.c : o(n)
+class Solution {
+public:
+    bool find132pattern(vector<int>& nums) {
+        int n=nums.size();
+        int num3=INT_MIN;
+        stack<int> st;
+        for(int i=n-1;i>=0;i--){
+            if(nums[i]<num3) return true;
+                //  a candidate for largest element
+                // num2=largest=cur=nums[i];
+                // second largest=num3= st.top()---> while(st.top()<=cur)
+
+                while(!st.empty() && st.top()<nums[i]){
+                    num3=st.top();
+                    st.pop();
+                }
+
+                st.push(nums[i]);  
+        }
+
+
+        return false;
+    }
+};
+
+
+
 // T.c: O(n^2)
 class Solution {
 public:
