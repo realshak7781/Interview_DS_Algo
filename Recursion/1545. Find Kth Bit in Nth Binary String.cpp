@@ -1,3 +1,5 @@
+
+// brute force : o(2^N)
 class Solution {
 private:
 string recur(int n){
