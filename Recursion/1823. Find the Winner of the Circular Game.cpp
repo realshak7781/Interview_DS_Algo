@@ -1,3 +1,27 @@
+// recursion : o(N) time and space
+class Solution {
+private:
+int josephus(int n,int k){
+    if(n==1){
+        return 0;
+    }
+
+    int idx=josephus(n-1,k);
+    idx=(idx+k)%n;
+
+    return idx;
+}    
+public:
+    int findTheWinner(int n, int k) {
+        // the goal is : the game starts at 1 and eliminates k-1th guy from start , so our goal should be to be: the guy to remain alive till last and not be eliminated : so think in terms of the position you would choose to not get eliminated:
+
+       int idx=josephus(n,k);
+
+       return idx+1;
+    }
+};
+
+
 // queue based approacch:
 class Solution {
 public:
