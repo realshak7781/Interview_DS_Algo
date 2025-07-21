@@ -1,4 +1,42 @@
+// better approach :
+class Solution {
+public:
+    string makeFancyString(string s) {
+        int n=s.length();
 
+        vector<int> freq(26,0);
+        string res="";
+
+        for(int i=0;i<s.length();i++){
+            if(i==0){
+                // first char
+                freq[s[i]-'a']++;
+                res+=s[i];
+            }
+            else{
+                char cur=s[i];
+                char prev=res.back();
+                res+=cur;
+                if(cur==prev){
+                    freq[cur-'a']++;
+                    int count=freq[cur-'a'];
+                    if(count>=3){
+                        // cur char forms three cons series
+                        res.pop_back();
+                        freq[cur-'a']--;
+                    }
+                }
+                else{
+                    freq[cur-'a']++;
+                    freq[prev-'a']=0;
+                }
+                
+            }
+        }
+
+        return res;
+    }
+};
 
 // brute force approach : O(N)
 // spaced : O(N)
