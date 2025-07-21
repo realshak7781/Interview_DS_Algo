@@ -1,7 +1,7 @@
 
 
 // brute force approach : O(N)
-// spaced : O(1)
+// spaced : O(N)
 class Solution {
 public:
     string makeFancyString(string s) {
