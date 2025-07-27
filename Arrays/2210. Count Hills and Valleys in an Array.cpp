@@ -1,4 +1,29 @@
+// optimal soluton :
+class Solution {
+public:
+    int countHillValley(vector<int>& nums) {
+        int n=nums.size();
+        int prev=0;
 
+        int count=0;
+        for(int i=1;i<=n-2;i++){
+            int high=i+1;
+
+            // plateau region
+            if(nums[i]==nums[high]) continue;
+
+            if(nums[i]>nums[prev] && nums[i]>nums[high]){
+                count++;
+            }
+            else if(nums[i]<nums[prev] && nums[i]<nums[high]){
+                count++;
+            }
+
+            prev=i;
+        }
+        return count;
+    }
+};
 
 class Solution {
 public:
