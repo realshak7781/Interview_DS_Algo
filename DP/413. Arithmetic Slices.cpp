@@ -1,3 +1,29 @@
+// optimal : O(n)
+
+class Solution {
+public:
+    int numberOfArithmeticSlices(vector<int>& nums) {
+        int n=nums.size();
+
+        vector<int> sliceCount(n,0);
+
+        for(int start=2;start<n;start++){
+            if((nums[start]-nums[start-1])==(nums[start-1]-nums[start-2])){
+                sliceCount[start]=1+sliceCount[start-1];
+            }
+            else{
+                sliceCount[start]=0;
+            }
+        }
+        
+        int count=0;
+
+        for(int cnt:sliceCount) count+=cnt;
+
+        return count;
+    }
+};
+
 
 //Brute Force Approach O(n^2)
 class Solution {
