@@ -1,4 +1,7 @@
 
+
+// time : O(n/k) * [O(n)+ O(n-r*k)]
+// space : O(n/k)
 class Solution {
 public:
     ListNode* reverseKGroup(ListNode* head, int k) {
