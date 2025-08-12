@@ -1,3 +1,36 @@
+// Optimising a little : Without using powers array:
+
+const int mod=1e9+7;
+class Solution {
+private:
+vector<vector<int>> dp;
+int findWays(int num,int target,int x){
+    if(target==0){
+        return 1;
+    }
+
+    int powVal=(int)pow(num,x)%mod;
+    if(powVal>target) return 0;
+
+    if(dp[num][target]!=-1) return dp[num][target];
+    int pick=0;
+    if(powVal<=target){
+        pick=(pick + (findWays(num+1,target-powVal,x))%mod)%mod;
+    }
+
+    int notPick=findWays(num+1,target,x)%mod;
+
+    return dp[num][target]=(pick+notPick)%mod;
+}
+public:
+    int numberOfWays(int n, int x) {
+        int num=1;
+        dp=vector<vector<int>> (301,vector<int>(n+1,-1));
+        return findWays(num,n,x);
+    }
+};
+
+
 
 // Brute force approach : Using extra space because of Powers array:
 const int mod=1e9+7;
