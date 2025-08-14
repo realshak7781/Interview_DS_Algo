@@ -1,4 +1,22 @@
+// Easiest approach :
+class Solution {
+public:
+    string largestGoodInteger(string num) {
+        string res="";
 
+        for(char val='9';val>='0';val--){
+            string sub(3,val);
+
+            auto it=num.find(sub);
+
+            if(it!=string::npos){
+                return sub;
+            }
+        }
+
+        return  "";
+    }
+};
 
 
 
