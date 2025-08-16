@@ -1,3 +1,35 @@
+
+// Further optimized
+class Solution {
+private:
+int getNum(int num){
+    int n=num;
+    int digCount=0;
+    int rightDigCount=-1;
+    while(n>0){
+        int dig=n%10;
+        if(dig==6){
+            rightDigCount=digCount;
+        }
+        digCount++;
+        n/=10;
+    }
+
+    if(rightDigCount==-1) return num;
+    // add power of 3 to the leftmost 6 nakes it nine :  9669 + 300 =9969
+    int pow3=3*pow(10,rightDigCount);
+
+    return num+pow3;
+}
+public:
+    int maximum69Number (int num) {
+        return getNum(num);
+    }
+};
+
+
+
+
 // using No extra space and TIME : O(2*log10(num))
 class Solution {
 private:
