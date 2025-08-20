@@ -1,3 +1,29 @@
+// using O(1) space
+class Solution {
+public:
+    vector<int> productExceptSelf(vector<int>& nums) {
+        int n=nums.size();
+
+        if(n==1) return {};
+        vector<int> res(n);
+
+        int prevAgg=1;
+        for(int i=0;i<n;i++){
+            res[i]=prevAgg;
+            prevAgg*=nums[i];
+        }
+
+        int suffAgg=1;
+        for(int i=n-1;i>=0;i--){
+            res[i]=res[i]*suffAgg;
+            suffAgg*=nums[i];
+        }
+
+        return res;
+    }
+};
+
+// /Using O(N) space
 class Solution {
 public:
     vector<int> productExceptSelf(vector<int>& nums) {
