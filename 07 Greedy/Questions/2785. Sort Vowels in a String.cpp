@@ -1,4 +1,39 @@
+// Approach 2: Using sorting technique + an extra array 
 
+
+class Solution {
+private:
+bool isVowel(char c){
+    if(c=='a' || c=='e' || c=='i' || c=='o' || c=='u') return true;
+    if(c=='A' || c=='E' || c=='I' || c=='O' || c=='U') return true;
+
+    return false;
+}
+public:
+    string sortVowels(string s) {
+        vector<char> vow;
+
+        for(char c: s){
+            if(isVowel(c)){
+                vow.push_back(c);
+            }
+        }
+
+        sort(begin(vow),end(vow));
+
+        int k=0;
+        for(int i=0;i<s.length();i++){
+            if(isVowel(s[i])){
+                s[i]=vow[k];
+                k++;
+            }
+        }
+
+        vow.clear();
+
+        return s;
+    }
+};
 
 
 // Approach 1:
