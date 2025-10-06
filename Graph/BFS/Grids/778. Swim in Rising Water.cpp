@@ -1,4 +1,46 @@
+// Using Dijkstras ALgorithm : Because the Problem mimicks Single Source Shortest Path
 
+
+using p=pair<int,pair<int,int>>;
+class Solution {
+private:
+vector<vector<int>> dir={{0,1},{0,-1},{1,0},{-1,0}};
+public:
+    int swimInWater(vector<vector<int>>& grid) {
+        int n=grid.size();
+        set<pair<int,int>> vis;
+
+        priority_queue<p,vector<p>,greater<p>> pq;
+
+        pq.push({grid[0][0],{0,0}});
+        vis.insert({0,0});
+
+
+        while(!pq.empty()){
+            auto top=pq.top();
+            pq.pop();
+
+            int time=top.first;
+            int x=top.second.first;
+            int y=top.second.second;
+
+            if(x==n-1 && y==n-1) return time;
+
+            for(auto d:dir){
+                int nx=x+d[0];
+                int ny=y+d[1];
+
+                if(nx>=0 && nx<n && ny>=0 && ny<n && !vis.count({nx,ny})){
+                    vis.insert({nx,ny});
+                    int nextHopTime=max(time,grid[nx][ny]);
+                    pq.push({nextHopTime,{nx,ny}});
+                }
+            }
+        }
+
+        return -1;
+    }
+};
 
 
 
