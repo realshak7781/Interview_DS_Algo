@@ -1,3 +1,54 @@
+// USING O(1) SPACE 
+class Solution {
+private:
+bool check(string &s1,string &s2){
+    vector<int> freq(26,0);
+
+    int i=0,j=0;
+
+    while(i<s1.length() || j<s2.length()){
+        if(i<s1.length()){
+            freq[s1[i]-'a']++;
+            i++;
+        }
+
+        if(j<s2.length()){
+            freq[s2[j]-'a']--;
+            j++;
+        }
+    }
+
+    for(int i=0;i<26;i++){
+        if(freq[i]<0 || freq[i]>0) return false;
+    }
+
+    return true;
+}
+public:
+    vector<string> removeAnagrams(vector<string>& words) {
+       int n=words.size();
+
+       vector<string> res;
+
+       for(int i=0;i<n;i++){
+          string ang=words[i];
+
+          if(res.empty()){
+            res.push_back(ang);
+          }
+          else{
+            if(!check(ang,res.back())){
+                res.push_back(ang);
+            }
+          }
+       }
+
+       return res;
+    }
+};
+
+
+
 // without stack + a little clean code:
 class Solution {
 public:
