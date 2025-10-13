@@ -1,3 +1,33 @@
+// without stack + a little clean code:
+class Solution {
+public:
+    vector<string> removeAnagrams(vector<string>& words) {
+       int n=words.size();
+
+       vector<string> res;
+
+       for(int i=0;i<n;i++){
+          string ang=words[i];
+
+          if(res.empty()){
+            res.push_back(ang);
+          }
+          else{
+            string prev=res.back();
+            sort(begin(prev),end(prev));
+            string sortedAng=ang;
+            sort(sortedAng.begin(),sortedAng.end());
+
+            if(sortedAng!=prev){
+                res.push_back(ang);
+            }
+          }
+       }
+
+       return res;
+    }
+};
+
 
 // Space brute forced + Not clean code : Accepted
 class Solution {
