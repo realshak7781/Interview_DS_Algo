@@ -35,6 +35,10 @@ _bottomRight;
 };
 */
 
+
+
+//  T. C : O(n^2 * logn)
+// S.C: O(logn)
 class Solution {
 private:
     bool isSame(int rowStart, int rowEnd, int colStart, int colEnd,
