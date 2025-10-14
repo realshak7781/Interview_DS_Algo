@@ -1,6 +1,6 @@
 // APPROACH 2:
 // USING SLIDING WINDOW + HASHSET
-// T.C:O(nlogn)
+// T.C:O(N)
 class Solution {
 private:
 bool check(vector<int>&indices,int k){
