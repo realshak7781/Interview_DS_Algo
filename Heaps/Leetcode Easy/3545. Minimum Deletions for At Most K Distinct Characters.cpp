@@ -1,4 +1,27 @@
+// Optimised Approach :
+// T.c : 
+class Solution {
+public:
+    int minDeletion(string s, int k) {
+       priority_queue<int,vector<int>,greater<int>> pq;
+       unordered_map<char,int> freq;
 
+       for(char c:s) freq[c]++;
+
+       for(auto it:freq){
+           // O(nlogn)
+        pq.push(it.second);
+       }
+
+       int totalDel=0;
+       while(pq.size()>k){
+        totalDel+=pq.top();
+        pq.pop();
+       }
+
+       return totalDel;
+    }
+};
 
 // Brute force : O(k*n)
 class Solution {
