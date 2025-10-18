@@ -1,4 +1,24 @@
+// Monotonic Stack
+class Solution {
+public:
+    int minOperations(vector<int>& nums) {
+        int n=nums.size();
+        stack<int> st;
+        int res=0;
+        for(int i=0;i<n;i++){
+            int cur=nums[i];
 
+            while(!st.empty() && cur<st.top()) st.pop();
+
+            if(st.empty() || cur>st.top()){
+                 if(cur>0)res++;
+                st.push(cur);
+            }
+        }
+
+        return res;
+    }
+};
 
 
 
