@@ -1,4 +1,23 @@
+// using mathematical nature of Numbers and what leads to zeroes in a number 
+class Solution {
+public:
+    int trailingZeroes(int n) {
+        if(n==0) return 0;
+        
+        int res=0;
+        int fives=5;
 
+        while(true){
+            int countOfFive=floor(n/fives);
+            if(countOfFive==0) return res;
+
+            res+=countOfFive;
+            fives=fives*5;
+        }
+
+        return res;
+    }
+};
 
 
 // brute force approach :
