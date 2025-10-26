@@ -1,3 +1,71 @@
+// Optimal : Using Hashmap and O(n^2) time
+class Solution {
+private:
+int gcd(int a,int b){
+    if(b==0) return a;
+
+    return gcd(b,a%b);
+}
+string getSlope(int x,int y){
+
+    if(x==0 && y==0){
+        return "duplicate";
+    }
+
+    if(x==0){
+        return "horizontal";
+    }
+
+    if(y==0){
+        return "vertical";
+    }
+    int g=gcd(abs(x),abs(y));
+    x/=g;
+    y/=g;
+
+    // normalization of signs is a must  : beacuse {(1,1), (-1,-1)} are same  and {(1,-1) , (-1,1) } are same
+    if(x<0){
+        x=-x;
+        y=-y;
+    }
+
+    return to_string(x) + "_" + to_string(y);
+}
+public:
+    int maxPoints(vector<vector<int>>& points) {
+        int n=points.size();
+        if(points.size()<=2) return n;
+
+        int res=0;
+
+        for(int i=0;i<n;i++){
+            int x1=points[i][0];
+            int y1=points[i][1];
+
+            unordered_map<string,int> slope; 
+            for(int j=i+1;j<n;j++){
+                int x2=points[j][0];
+                int y2=points[j][1];
+
+                int dx=x2-x1;
+                int dy=y2-y1;
+
+                string slp=getSlope(dx,dy);
+
+                slope[slp]++;
+            }
+
+            for(auto it:slope){
+                res=max(res,it.second+1);
+            }
+        }
+
+        return res;
+    }
+};
+
+
+// Brute force : O(n^3)
 class Solution {
 private:
 int gcd(int a,int b){
