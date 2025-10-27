@@ -1,4 +1,36 @@
+// A little Optimized
+class Solution {
+public:
+    int numberOfBeams(vector<string>& bank) {
+        int m=bank.size();
+        int n=bank[0].size();
 
+        vector<int> deviceCnt;
+
+        for(int i=0;i<m;i++){
+            string s=bank[i];
+            int count=0;
+
+            for(int j=0;j<n;j++){
+                if(s[j]=='1') count++;
+            }
+            if(count>0){
+                deviceCnt.push_back(count);
+            }
+        }
+
+        if(deviceCnt.size()==0) return 0;
+
+        // 1... Any curRow needs the first non zero row, it is not concerned with zeroes in b/w
+        // 2....and it(curRow) wont check after it has found the first non zero val
+        int totalCount=0;
+        for(int i=0;i<deviceCnt.size()-1;i++){
+            totalCount+=(deviceCnt[i]*deviceCnt[i+1]);
+        }
+
+        return totalCount;
+    }
+};
 
 // Brute force : O(n^2) +  O(n) space
 class Solution {
