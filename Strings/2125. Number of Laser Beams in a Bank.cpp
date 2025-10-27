@@ -1,3 +1,6 @@
+
+
+// Brute force : O(n^2) +  O(n) space
 class Solution {
 private:
 bool isEmpty(string s){
