@@ -6,7 +6,6 @@ private:
 unordered_map<int,unordered_map<int,int>> dp;
 int solve(int start,int end){
     if(start==end) return 0;
-    if(start>end) return INT_MIN;
 
     if(dp[start].count(end)) return dp[start][end];
     int minCash=INT_MAX;
