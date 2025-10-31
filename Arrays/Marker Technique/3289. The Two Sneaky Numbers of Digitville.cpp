@@ -3,7 +3,59 @@
 //   it's a strong signal to use the array's indices as a "hash map" or "checklist." This can be done by either negating values at corresponding indices to "mark" them as seen or by swapping elements to their correct positions (Cyclic Sort).
 
 
+// Approach 2: Using Separator Mask
+class Solution {
+public:
+    vector<int> getSneakyNumbers(vector<int>& nums) {
+        int originalSize=nums.size()-2;
 
+        int n=nums.size();
+
+        int xorVal=0;
+        for(int i=0;i<n;i++){
+            xorVal^=nums[i];
+        }
+
+        for(int i=0;i<originalSize;i++){
+            xorVal^=i;
+        }
+
+
+        int trailZerosCnt=__builtin_ctz(xorVal);
+        int separator=1<<trailZerosCnt;
+
+        int group1=0;
+        int group2=0;
+
+        for(int i=0;i<n;i++){
+            if(separator&nums[i]){
+                // put in group 1
+                group2^=nums[i];
+            }
+            else{
+                // put in group 0
+                group1^=nums[i];
+            }
+        }
+
+
+        for(int i=0;i<originalSize;i++){
+             if(separator&i){
+                // put in group 1
+                group2^=i;
+            }
+            else{
+                // put in group 0
+                group1^=i;
+            }
+        }
+
+
+        return {group1,group2};
+    }
+};
+
+// Approach 1: Using Negation:
 class Solution {
 public:
     vector<int> getSneakyNumbers(vector<int>& nums) {
