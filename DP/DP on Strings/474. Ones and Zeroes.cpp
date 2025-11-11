@@ -1,4 +1,55 @@
 
+// Using Bottom Up Approach: 
+using p=pair<int,int>;
+class Solution {
+private:
+vector<p> count;
+int size;
+
+
+int solveTab(int m,int n){
+    int dp[601][101][101];
+    memset(dp,0,sizeof(dp));
+
+    for(int i=size-1;i>=0;i--){
+        for(int j=0;j<=m;j++){
+            for(int k=0;k<=n;k++){
+                int curZeroCount=count[i].first;
+                int curOneCount=count[i].second;
+
+                int len=0;
+
+                if(curZeroCount<=j && curOneCount<=k){
+                    len=1+dp[i+1][j-curZeroCount][k-curOneCount];
+                }
+
+                len=max(len,dp[i+1][j][k]);
+
+                dp[i][j][k]=len;
+            }
+        }
+    }
+
+    return dp[0][m][n];
+}
+public:
+    int findMaxForm(vector<string>& strs, int m, int n) {
+
+        for(string s:strs){
+            int zeroes=0;
+            for(char c:s){
+                if(c=='0') zeroes++;
+            }
+            int ones=s.length()-zeroes;
+            count.push_back({zeroes,ones});
+        }
+
+        size=count.size();
+        return solveTab(m,n);
+    }
+};
+
+
 // Recursion + Memoization
 using p=pair<int,int>;
 class Solution {
