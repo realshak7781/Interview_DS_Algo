@@ -1,4 +1,4 @@
-// Aproach 1 : Time : O(nlogn + maxi*nlogn)
+// Aproach 1 : Time : O(nlogn + log2(naxi)*nlogn)
 class Solution {
 private:
 bool binarySearch(vector<int>&nums,int org){
@@ -24,6 +24,30 @@ public:
 
         while(true){
             if(binarySearch(nums,original)){
+                original*=2;
+            }
+            else{
+                return original;
+            }
+        }
+        return original;
+    }
+};
+
+
+// Approach 2: using unordered set data structure for fast and efficient lookups
+class Solution {
+public:
+    int findFinalValue(vector<int>& nums, int original) {
+        int maxi=*max_element(begin(nums),end(nums));
+        // o(n)
+        unordered_set<int> st(begin(nums),end(nums));
+        // O(n)
+
+        while(original<=maxi){
+            // runs for log2(maxi) times
+            if(st.count(original)){
+                // o(1) check
                 original*=2;
             }
             else{
