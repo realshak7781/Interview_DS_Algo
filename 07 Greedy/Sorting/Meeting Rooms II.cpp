@@ -31,6 +31,46 @@ public:
            max_meetings=max(max_meetings,concurrent_meetings);
        }
 
+
+    // approach 2:
+
+using p=pair<int,int>;
+class Solution {
+public:
+    int minMeetingRooms(vector<Interval>& intervals) {
+        int n=intervals.size();
+        if(n==0 || n==1) return n;
+
+        vector<int> startV,endV;
+        for(auto it:intervals){
+            startV.push_back(it.start);
+            endV.push_back(it.end);
+        }
+
+        sort(begin(startV),end(startV));
+        sort(begin(endV),end(endV));
+
+        int s=0,e=0;
+        int maxRoom=-1,meetings=0;
+        while(s<startV.size() &&  e<endV.size()){
+
+            if(startV[s]<endV[e]){
+                meetings++;
+                s++;
+            }
+            else{
+                meetings--;
+                e++;
+            }
+
+            maxRoom=max(maxRoom,meetings);
+        }
+
+        return maxRoom;
+    }
+};
+
+
        return max_meetings;
     }
 };
