@@ -1,3 +1,42 @@
+// Approach 2:
+// using maths and prefixSum :
+using ll = long long;
+class Solution {
+public:
+    long long maxSubarraySum(vector<int>& nums, int k) {
+        int n = nums.size();
+
+        ll maxSum=LLONG_MIN;
+        // we will use the formula and derive the solution from that :
+        // len = j-i+1
+        // (j+1)%k==(i%k)
+        // subarraySum=pfSum[j]-pfsum[i-1]
+        // to form a valid subarray ending at idx j start idex i must have the same rem as (j+1)%k
+        // so prevIdx=i-1;
+        // i=prevIdx+1
+        // substituting:
+        // (j+1)%k==(prevIdx+1)%k;
+
+
+        vector<ll> mp(k,LLONG_MAX);
+        ll curSum=0;
+        mp[0]=0;
+        for(int i=0;i<n;i++){
+            curSum+=nums[i];
+
+            int rem=(i+1)%k;
+
+            if(mp[rem]!=LLONG_MAX){
+                ll subSum=curSum-mp[rem];
+                maxSum=max(maxSum,subSum);
+            }
+
+            mp[rem]=min(curSum,mp[rem]);
+        }
+
+        return maxSum;
+    }
+};
 
 
 // Approach 1 : Using Sliding window and looping for Len
