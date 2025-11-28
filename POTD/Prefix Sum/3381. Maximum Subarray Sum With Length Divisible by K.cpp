@@ -71,3 +71,36 @@ public:
         return maxSum;
     }
 };
+
+
+// Approach 3 : Using Kadane Algorithm
+using ll=long long;
+class Solution {
+public:
+    long long maxSubarraySum(vector<int>& nums, int k) {
+        int n=nums.size();
+        ll maxSum=LLONG_MIN;
+
+        vector<ll> pfSum(n);
+        pfSum[0]=nums[0];
+        for(int i=1;i<n;i++){
+            pfSum[i]=nums[i]+pfSum[i-1];
+        }
+
+        for(int idx=0;idx<k;idx++){
+            ll curSum=0;
+            int i=idx;
+            int j=i+k-1;
+
+            while(i<n && j<n){
+                ll subSum=pfSum[j]-(i>0 ? pfSum[i-1]:0);
+                curSum=max(subSum,curSum+subSum);
+                maxSum=max(maxSum,curSum);
+                i+=k;
+                j=i+k-1;
+            }
+        }
+
+        return maxSum;
+    }
+};
