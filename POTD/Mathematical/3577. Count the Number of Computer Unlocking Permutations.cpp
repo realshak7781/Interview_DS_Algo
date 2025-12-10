@@ -1,3 +1,24 @@
+// Approach 2 : Cleaning the code and making logic more clear
+class Solution {
+private:
+const int mod=1e9+7;
+public:
+    int countPermutations(vector<int>& complexity) {
+        // if the count of minElem is more than one in complexity return 0;
+        int n=complexity.size();
+        long long count=1;
+
+        for(int i=n-1;i>=1;i--){
+            if(complexity[i]<=complexity[0]) return 0;
+
+            count=(count*i)%mod;
+        }
+
+        return count;
+    }
+};
+
+// Approach 1:
 class Solution {
 private:
 const int mod=1e9+7;
