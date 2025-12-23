@@ -1,3 +1,72 @@
+// approach 1: using map + bfs 
+// time : O(meetings) + O(time * (meetings + (persons+meetings)))
+// space : O(meetings + person)
+using p=pair<int,int>;
+class Solution {
+public:
+    vector<int> findAllPeople(int n, vector<vector<int>>& meetings, int firstPerson) {
+        map<int,vector<p>> timeMeetings;
+
+        for(auto &it:meetings){
+            int t=it[2];
+            int u=it[0];
+            int v=it[1];
+            timeMeetings[t].push_back({u,v});
+        }
+        vector<bool> knowsSecret(n,false);
+        knowsSecret[0]=true;
+        knowsSecret[firstPerson]=true;
+
+
+        for(auto &it:timeMeetings){
+            int time=it.first;
+
+            unordered_map<int,vector<int>> adj;
+            queue<int> q;
+            unordered_set<int> seen;
+            // populate the adjacency list;
+            for(auto &p:it.second){
+                int u=p.first;
+                int v=p.second;
+                adj[u].push_back(v);
+                adj[v].push_back(u);
+
+                if(knowsSecret[u] && seen.find(u)==seen.end()){
+                    q.push(u);
+                    seen.insert(u);
+                }
+
+                if(knowsSecret[v] && seen.find(v)==seen.end()){
+                    q.push(v);
+                    seen.insert(v);
+                }
+            }
+
+            // do bfs
+            while(!q.empty()){
+                int p=q.front();
+                q.pop();
+
+
+                for(auto &neigh:adj[p]){
+                    if(knowsSecret[neigh]==false){
+                        knowsSecret[neigh]=true;
+                        q.push(neigh);
+                    }
+                }
+            }
+        }
+
+        vector<int> res;
+        for(int i=0;i<n;i++){
+            if(knowsSecret[i]==true) res.push_back(i);
+        }
+
+        return res;
+    }
+};
+
+// approach 4: using union find
 class disjointSet{
     private:
     vector<int> parent;
