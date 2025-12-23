@@ -66,6 +66,57 @@ public:
     }
 };
 
+
+// approach 2:
+using p=pair<int,int>;
+class Solution {
+public:
+    vector<int> findAllPeople(int n, vector<vector<int>>& meetings, int firstPerson) {
+        unordered_map<int,vector<p>> adj;
+
+        for(auto &it:meetings){
+            int t=it[2];
+            int u=it[0];
+            int v=it[1];
+
+            adj[u].push_back({v,t});
+            adj[v].push_back({u,t});
+        }
+
+        vector<int> timetoKnow(n,INT_MAX);
+        timetoKnow[0]=0;
+        timetoKnow[firstPerson]=0;
+
+        queue<p> q;
+        q.push({0,0});
+        q.push({0,firstPerson});
+
+
+        while(!q.empty()){
+           auto [time,u]=q.front();
+            q.pop();
+
+            for(auto &neigh:adj[u]){
+                int v=neigh.first;
+                int meetTime=neigh.second;
+
+                if(time<=meetTime && timetoKnow[v] > meetTime){
+                    timetoKnow[v]=meetTime;
+                    q.push({meetTime,v});
+                }
+            }
+        }
+
+
+        vector<int> res;
+        for(int i=0;i<n;i++){
+            if(timetoKnow[i]!=INT_MAX) res.push_back(i);
+        }
+
+        return res;
+    }
+};
+
 // approach 4: using union find
 class disjointSet{
     private:
