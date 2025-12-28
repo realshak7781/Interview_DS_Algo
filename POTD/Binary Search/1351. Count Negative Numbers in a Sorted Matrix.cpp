@@ -1,3 +1,30 @@
+// approach 3 : Using Simple observations : O(n+m)
+class Solution {
+public:
+    int countNegatives(vector<vector<int>>& grid) {
+        int m=grid.size();
+        int n=grid[0].size();
+
+        int res=0;
+        int startRow=0;
+        int startCol=n-1;
+
+        while(startRow<m && startCol>=0){
+            int curElem=grid[startRow][startCol];
+
+            if(curElem<0){
+                res+=(m-startRow);
+                startCol--;
+            }
+            else{
+                startRow++;
+            }
+        }
+        return res;
+    }
+};
+
+
 // approach 2 :Using Binary search : 
 // time : O(r*logc)
 class Solution {
