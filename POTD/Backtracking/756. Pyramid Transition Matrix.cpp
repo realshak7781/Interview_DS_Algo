@@ -1,3 +1,47 @@
+// Using dp + memoization + hashmap
+class Solution {
+private:
+    unordered_map<string,vector<char>> transitions;
+    unordered_map<string,bool> dp;
+    void generateStrings(string s, int pos, int len, string &prev,vector<string>&temp) {
+        if (pos == len) {
+            temp.push_back(s);
+            return;
+        }
+
+        string key=prev.substr(pos,2);
+        for (char c:transitions[key]) {
+            generateStrings(s + c, pos + 1, len, prev,temp);
+        }
+    }
+
+    bool solve(string cur) {
+        int curLen = cur.length() - 1;
+        if (curLen == 0) return true;
+
+        if(dp.count(cur)) return dp[cur];
+        vector<string> all; 
+        generateStrings("", 0, curLen, cur,all);
+        for (string &s : all) {
+            if (solve(s)) return true;
+        }
+        return dp[cur]=false;
+    }
+
+public:
+    bool pyramidTransition(string bottom, vector<string>& allowed) {
+
+        for(string &s:allowed){
+            char top=s[2];
+            string key=s.substr(0,2);
+            transitions[key].push_back(top);
+        }
+        return solve(bottom);
+    }
+};
+
+
+
 // optimizing using a hashmap to check only those strings that are allowed
 class Solution {
 private:
