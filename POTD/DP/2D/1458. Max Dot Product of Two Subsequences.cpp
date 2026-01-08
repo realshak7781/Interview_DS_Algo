@@ -1,3 +1,46 @@
+// approach 2 : Using tabulation dp approach
+
+class Solution {
+private:
+
+    int tab(vector<int>& nums1, vector<int>& nums2) {
+        int m = nums1.size(), n = nums2.size();
+
+        vector<vector<int>> dp(m+1,vector<int>(n+1,-1e9));
+        for (int j = 0; j <= n; j++)
+            dp[m][j] = -1e9;
+        for (int i = 0; i <=m; i++)
+            dp[i][n] = -1e9;
+
+        for (int i = m - 1; i >= 0; i--) {
+            for (int j = n - 1; j >= 0; j--) {
+                int maxDotProdSum = nums1[i] * nums2[j] +
+                                    max(0, dp[i+1][j+1]);
+                ;
+                // skip i
+                maxDotProdSum =
+                    max(maxDotProdSum, dp[i+1][j]);
+                // skip j
+                maxDotProdSum =
+                    max(maxDotProdSum, dp[i][j+1]);
+                // skip both
+                maxDotProdSum =
+                    max(maxDotProdSum, dp[i+1][j+1]);
+
+                dp[i][j] = maxDotProdSum;
+            }
+
+        }
+
+        return dp[0][0];
+    }
+
+public:
+    int maxDotProduct(vector<int>& nums1, vector<int>& nums2) {
+       return tab(nums1,nums2);
+    }
+};
+
 
 // approach 1 : Using recursion + memoization
 // time : o(m*n)
