@@ -1,4 +1,29 @@
 
+// Using Maths : Time : O (n)
+class Solution {
+public:
+    int minTimeToVisitAllPoints(vector<vector<int>>& points) {
+        int n=points.size();
+        // the best stratgey is to move diagonally and then cover steps one unit at a time veritcally or horizontally
+        int totalTime=0;
+
+        for(int i=1;i<n;i++){
+            int prevX=points[i-1][0];
+            int prevY=points[i-1][1];
+
+            // trying to reach from prev to cur point in min time
+            int curX=points[i][0];
+            int curY=points[i][1];
+
+            int mini=min(abs(curX-prevX),abs(curY-prevY));
+            int maxi=max(abs(curX-prevX),abs(curY-prevY));
+
+            totalTime=totalTime+mini/*this is diagonal dist*/+(maxi-mini) /*this is rem vertical or horizontal dist*/;
+        }
+
+        return totalTime;
+    }
+};
 
 // extreme brute force using BFS
 class Solution {
