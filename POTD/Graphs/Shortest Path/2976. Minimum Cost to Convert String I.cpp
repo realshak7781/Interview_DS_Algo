@@ -1,9 +1,9 @@
 
 
 // USING MULTI SOURCE DIJKSTRAS ALGORITHM : 
-// TOTAL NO OF NODES=26=n
-// TIME : O(N) + O(26*26*26*LOG(26))
-// SPACE : O(26*26)
+// m : TOTAL ENTRIES IN ORIGINAL AND CHANGED
+// TIME : O(N) + O(mlogm)
+// SPACE : O(m)
 using p=pair<int,long long>;
 class Solution {
 private:
