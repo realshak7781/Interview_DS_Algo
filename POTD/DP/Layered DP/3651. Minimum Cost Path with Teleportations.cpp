@@ -1,3 +1,69 @@
+// USING LAYERED DP AND DECOUPLING 
+class Solution {
+private:
+    int solve(vector<vector<int>> grid, int m, int n, int k) {
+        vector<vector<int>> dp(m + 1, vector<int>(n + 1, INT_MAX));
+        dp[m - 1][n - 1] = 0;
+
+        int maxVal=-1e9;
+        for (auto& row : grid) {
+            for (int &val:row){
+                maxVal=max(maxVal,val);
+            }
+        }
+
+        vector<int> teleportations(maxVal+1,INT_MAX);
+
+        for(int tPort=0;tPort<=k;tPort++){
+            for(int i=m-1;i>=0;i--){
+                for(int j=n-1;j>=0;j--){
+                    if(i==m-1 && j==n-1) continue;
+
+                    // moving right
+                    if(j+1<n){
+                        dp[i][j]=min(dp[i][j],grid[i][j+1]+dp[i][j+1]);
+                    }
+
+                    // moving down
+                    if(i+1<m){
+                        dp[i][j]=min(dp[i][j],grid[i+1][j]+dp[i+1][j]);
+                    }
+
+                    // trying to teleport
+                    if(tPort>0){
+                        dp[i][j]=min(dp[i][j],teleportations[grid[i][j]]);
+                    }
+                }
+            }
+
+
+            // updating the teleportations array
+            for(int i=0;i<m;i++){
+                for(int j=0;j<n;j++){
+                    teleportations[grid[i][j]]=min(teleportations[grid[i][j]],dp[i][j]);
+                }
+            }
+
+            // also updating  through prefix mins
+            for(int i=1;i<=maxVal;i++){
+                teleportations[i]=min(teleportations[i],teleportations[i-1]);
+            }
+        }
+
+        return dp[0][0];
+    }
+
+public:
+    int minCost(vector<vector<int>>& grid, int k) {
+        // the rrecursive call returns me (0,0) to (m-1,n-1) min total cost ?
+        int m = grid.size();
+        int n = grid[0].size();
+
+        return solve(grid, m, n, k);
+    }
+};
+
+
 // USING BOTTOM UP APPROACH : TLE
 class Solution {
 private:
