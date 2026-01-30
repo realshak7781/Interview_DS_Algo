@@ -1,4 +1,53 @@
+// USING THE FLOYD WARSHALL ALGORITHM:
 
+class Solution {
+public:
+    long long minimumCost(string source, string target, vector<char>& original, vector<char>& changed, vector<int>& cost) {
+        // construct the adjacency List;
+        int totalSizeOfOperations=original.size();
+
+        // Using the Floyd warshall algorithm : we need the min cost from any source to any target
+        vector<vector<long long>> dist(26,vector<long long>(26,LLONG_MAX));
+        for(int i=0;i<26;i++){
+            for(int j=0;j<26;j++){
+                if(i==j){
+                    dist[i][j]=0;
+                }
+            }
+        }
+
+        for(int i=0;i<totalSizeOfOperations;i++){
+            int u=original[i]-'a';
+            int v=changed[i]-'a';
+            int wt=cost[i];
+            dist[u][v]=min(dist[u][v], 1LL*wt);
+        }
+
+        
+
+        for(int k=0;k<26;k++){
+            for(int i=0;i<26;i++){
+                for(int j=0;j<26;j++){
+                    if(dist[i][k]!=LLONG_MAX && dist[k][j]!=LLONG_MAX){
+                        dist[i][j]=min(dist[i][j],dist[i][k]+dist[k][j]);
+                    }
+                }
+            }
+        }
+
+        long long totalMinCost=0;
+        for(int i=0;i<source.length();i++){
+            int u=source[i]-'a';
+            int v=target[i]-'a';
+
+            long long curTransitionCost=dist[u][v];
+            if(curTransitionCost==LLONG_MAX) return -1;
+            totalMinCost+=curTransitionCost;
+        }
+
+        return totalMinCost;
+    }
+};
 
 // USING MULTI SOURCE DIJKSTRAS ALGORITHM : 
 // m : TOTAL ENTRIES IN ORIGINAL AND CHANGED
