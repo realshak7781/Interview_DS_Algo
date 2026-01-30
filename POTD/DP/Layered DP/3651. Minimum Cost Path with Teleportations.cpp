@@ -1,3 +1,71 @@
+// USING BOTTOM UP APPROACH : TLE
+class Solution {
+private:
+
+    int solve(vector<vector<int>> grid, int m, int n,int k) {
+        vector<vector<vector<int>>> dp(
+            m + 1, vector<vector<int>>(n + 1, vector<int>(k + 1, -1)));
+
+        for (int tPort = 0; tPort <= k; tPort++) {
+            dp[m - 1][n - 1][tPort] = 0;
+        }
+
+        // state definition:
+        // min Cost to reach from any (i,j) to (m-1,n-1) using 0 teleports
+
+        for (int tPort = k; tPort >= 0; tPort--) {
+            for (int i = m - 1; i >= 0; i--) {
+                for (int j = n - 1; j >= 0; j--) {
+                    if (i == m - 1 && j == n - 1)
+                        continue;
+
+                    int minCost = 1e9;
+                    // normal move
+                    // right and down
+                    if (j + 1 < n) {
+                        minCost =
+                            min(minCost, grid[i][j + 1] + dp[i][j+1][tPort]);
+                    }
+                    if (i + 1 < m) {
+                        minCost =
+                            min(minCost, grid[i + 1][j] + dp[i+1][j][tPort]);
+                    }
+
+                    // trying to telepor
+
+                    if (tPort < k) {
+                        for (int x = 0; x < m; x++) {
+                            for (int y = 0; y < n; y++) {
+                                // (i,j) ---> (x,y) : grid[x][y]<=grid[i][j
+                                if (x == i && y == j)
+                                    continue;
+
+                                if (grid[x][y] <= grid[i][j]) {
+                                    minCost =
+                                        min(minCost, dp[x][y][tPort+1]);
+                                }
+                            }
+                        }
+                    }
+                  dp[i][j][tPort] = minCost;
+                }
+            }
+        }
+
+
+        return dp[0][0][0];
+    }
+
+public:
+    int minCost(vector<vector<int>>& grid, int k) {
+        // the rrecursive call returns me (0,0) to (m-1,n-1) min total cost ?
+        int m = grid.size();
+        int n = grid[0].size();
+
+        return solve(grid,m,n,k);
+    }
+};
+
 
 // Using Recursion + Memoization : TLE
 class Solution {
