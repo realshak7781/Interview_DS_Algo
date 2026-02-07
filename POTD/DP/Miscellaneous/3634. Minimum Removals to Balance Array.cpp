@@ -1,3 +1,46 @@
+// Approach 3 : Using Binary Search to find the maxEnd ,while being fixated on the minimum on one Side
+using ll=long long;
+class Solution {
+public:
+    int minRemoval(vector<int>& nums, int k) {
+        int n=nums.size();
+        if(n==1) return 0;
+
+        sort(begin(nums),end(nums));
+        int minRes=1e9;
+        for(int i=0;i<n;i++){
+            ll mulVal=1LL*k*nums[i]; 
+            int low=i+1;
+            int high=n-1;
+            int idx=-1;
+
+            while(low<=high){
+                int mid=low+(high-low)/2;
+
+                if(nums[mid]<=mulVal){
+                    idx=mid;
+                    low=mid+1;
+                }
+                else{
+                    high=mid-1;
+                }
+            }
+
+            if(idx!=-1){
+                int elemToDelete=n-(idx-i+1);
+                minRes=min(minRes,elemToDelete);
+            }
+            else if(idx==-1){
+                // only keep the current element and delete everything
+                minRes=min(minRes,n-1);
+            }
+        }
+
+        return minRes;
+    }
+};
+
+
 // approach 2: Using brute force approach :
 using ll=long long;
 class Solution {
