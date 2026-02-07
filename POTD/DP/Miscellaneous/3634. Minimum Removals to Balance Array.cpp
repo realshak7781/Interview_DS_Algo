@@ -1,3 +1,25 @@
+// approach 2: Using brute force approach :
+using ll=long long;
+class Solution {
+public:
+    int minRemoval(vector<int>& nums, int k) {
+        int n=nums.size();
+
+        sort(begin(nums),end(nums));
+        int minRes=n;
+        for(int i=0;i<n;i++){
+            for(int j=i;j<n;j++){
+                ll mulVal=1LL*nums[i]*k;
+                if(nums[j]<=mulVal){
+                    int elemToDelete=n-(j-i+1);
+                    minRes=min(minRes,elemToDelete);
+                }
+            }
+        }
+
+        return minRes;
+    }
+};
 
 // Approach 1 : Using DP
 // Time : O(n*n)
