@@ -1,4 +1,4 @@
-// OPTIMAL APPROACH :
+// OPTIMAL APPROACH : Using Two odd and even Sets to reduce search space of f
 // TIME : O(nlogn)
 // SPACE: O(n)
 
