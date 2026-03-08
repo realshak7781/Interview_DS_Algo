@@ -1,4 +1,34 @@
+// Iterative approach 
 
+class Solution {
+private:
+int solve(string &s){
+    int resOps=0;
+
+    for(int i=1;i<s.length();i++){
+        if(s[i]==s[i-1]){
+            resOps++;
+            char org=s[i];
+            s[i]=(org=='1' ? '0' : '1');
+        }
+    }
+
+    return resOps;
+}
+public:
+    int minOperations(string s) {
+        string original=s;
+        int ops=solve(s);
+
+        s=original;
+        char org=s[0];
+        s[0]=(org=='1' ? '0' : '1');
+        ops=min(ops,1+solve(s));
+        s[0]=org;
+
+        return ops;
+    }
+};
 
 // APPROACH  1: USING RECURSION + MEMOIZATION
 // TIME : O(N)
