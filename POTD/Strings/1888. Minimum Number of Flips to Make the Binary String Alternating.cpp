@@ -1,3 +1,70 @@
+// SLIDING WINDOW APPROACH
+class Solution {
+public:
+    int minFlips(string s) {
+        int len = s.length();
+
+        string cur = s + s;
+        string s1 = "0";
+        string s2 = "1";
+
+        for (int i = 1; i < 2 * len; i++) {
+            if (i & 1) {
+                s1 += '1';
+                s2 += '0';
+            } else{
+                s1 += '0';
+                s2 += '1';
+            }
+        }
+
+        // find the flips for the current window
+        int flip1 = 0;
+        int flip2 = 0;
+        int minSteps = INT_MAX;
+
+        for (int i = 0; i < len; i++) {
+            if (cur[i] != s1[i]) {
+                flip1++;
+            }
+            else if(cur[i] != s2[i]) {
+                flip2++;
+            }
+        }
+
+        minSteps = min(flip1, flip2);
+
+        // done now next window
+        int i = 1;
+        int j = len;
+
+        while (i < len) {
+            // cur window
+
+            int prevIdx = i - 1;
+            if (cur[prevIdx] != s1[prevIdx]) {
+                flip1--;
+            } else {
+                flip2--;
+            }
+
+            int curIdx = j;
+
+            if (cur[curIdx] != s1[curIdx]) {
+                flip1++;
+            } else {
+                flip2++;
+            }
+
+            minSteps=min({minSteps,flip1,flip2});
+            i++;
+            j++;
+        }
+
+        return minSteps;
+    }
+};
+
 
 // Using Brute force Approach
 // Time : O(len*len)
