@@ -1,3 +1,61 @@
+// SLIDING WINDOW OPTIMIZED FOR SPACE :
+class Solution {
+public:
+    int minFlips(string s) {
+        int len = s.length();
+
+        // find the flips for the current window
+        int flip1 = 0;
+        int flip2 = 0;
+        int minSteps = INT_MAX;
+
+        for (int i = 0; i < len; i++) {
+            char binaryChar1=(i%2==0 ? '0' : '1');
+
+            if (s[i] != binaryChar1) {
+                flip1++;
+            }
+            else{
+                flip2++;
+            }
+        }
+
+        minSteps = min(flip1, flip2);
+
+        // done now next window
+        int i = 1;
+        int j = len;
+
+        while (i < len) {
+            // cur window
+
+            int prevIdx = i - 1;
+            char binaryChar1=(prevIdx%2==0 ? '0' : '1');
+
+            if (s[prevIdx] !=binaryChar1) {
+                flip1--;
+            } else {
+                flip2--;
+            }
+
+            int curIdx = j;
+            binaryChar1=(curIdx%2==0 ? '0' : '1');
+            if (s[curIdx%len] != binaryChar1) {
+                flip1++;
+            } else {
+                flip2++;
+            }
+
+            minSteps=min({minSteps,flip1,flip2});
+            i++;
+            j++;
+        }
+
+        return minSteps;
+    }
+};
+
+
 // SLIDING WINDOW APPROACH
 class Solution {
 public:
