@@ -1,3 +1,38 @@
+// Using Bottom Up approach
+const int mod = 1e9 + 7;
+class Solution {
+private:
+    int solveUseBottomUp(int zero, int one,int limit) {
+        vector<vector<vector<int>>> dp(
+            zero + 1, vector<vector<int>>(one + 1, vector<int>(2, 0)));
+        dp[0][0][0] = 1;
+        dp[0][0][1] = 1;
+
+        for (int zLeft = 0; zLeft <=zero; zLeft++) {
+            for (int oLeft = 0; oLeft <=one;oLeft++) {
+                if (zLeft == 0 && oLeft == 0)
+                    continue;
+
+                for (int zCnt = 1; zCnt <= min(limit, zLeft); zCnt++) {
+                    dp[zLeft][oLeft][0]= (dp[zLeft][oLeft][0]+ dp[zLeft - zCnt][oLeft][1]) % mod;
+                }
+
+                for (int oneCnt = 1; oneCnt <= min(limit, oLeft); oneCnt++) {
+                    dp[zLeft][oLeft][1]=(dp[zLeft][oLeft][1]+dp[zLeft][oLeft-oneCnt][0]) % mod;
+                }
+            }
+        }
+
+        return (dp[zero][one][0]+dp[zero][one][1])%mod;
+    }
+
+public:
+    int numberOfStableArrays(int zero, int one, int limit) {
+        return solveUseBottomUp(zero,one,limit)% mod;
+    }
+};
+
+
 // Using a Better little optimised Recursion + memoization approach
 const int mod=1e9+7;
 class Solution {
