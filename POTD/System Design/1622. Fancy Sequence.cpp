@@ -1,4 +1,69 @@
+// Using purely mathematics 
+//o(1)
+const int mod=1e9+7;
+using ll=long long;
+class Fancy {
+private:
+ll getPower(ll a,ll b){
+    if(b==0) return 1;
+    ll half=getPower(a,b/2)%mod;
 
+    ll res=(half*half)%mod;
+
+    if(b&1){
+        res=(res*a)%mod;
+    }
+    return res;
+}
+
+ll modInverse(ll b){
+    return getPower(b,mod-2)%mod;
+}
+
+ll fermat(ll a,ll b){
+    a=a%mod;
+    b=modInverse(b)%mod;
+
+    return (a*b)%mod;
+}
+
+vector<ll> seq;
+ll addVal;
+ll mulVal;
+public:
+    Fancy() {
+        addVal=0;
+        mulVal=1;
+    }
+    
+    void append(int val) {
+        ll a=(val-addVal+mod)%mod;
+        ll b=mulVal;
+
+        ll z=fermat(a,b)%mod;
+
+        seq.push_back(z);
+    }
+    
+    void addAll(int inc) {
+        addVal=(addVal+inc)%mod;
+    }
+    
+    void multAll(int m) {
+        mulVal=(mulVal*m)%mod;
+        addVal=(addVal*m)%mod;
+    }
+    
+    int getIndex(int idx) {
+        if(idx>=seq.size()) return -1;
+
+        ll res=seq[idx];
+        res=(res*mulVal)%mod;
+        res=(res+addVal)%mod;
+
+        return res;
+    }
+};
 
 
 // Brute force Approach:
