@@ -1,3 +1,49 @@
+// without sorting 
+class Solution {
+public:
+    int largestSubmatrix(vector<vector<int>>& matrix) {
+        int rows=matrix.size();
+        int cols=matrix[0].size();
+
+        int resArea=0;
+        vector<pair<int,int>> prevHeightPairs;
+
+        for(int i=0;i<rows;i++){
+            vector<pair<int,int>> curHeightPairs;
+            vector<bool> seen(cols,false);
+
+            for(auto &[h,c]:prevHeightPairs){
+                if(matrix[i][c]==0) continue;
+                curHeightPairs.push_back({matrix[i][c]+h,c});
+                seen[c]=true;
+            }
+
+
+            for(int k=0;k<cols;k++){
+                if(!seen[k] && matrix[i][k]!=0){
+                    curHeightPairs.push_back({matrix[i][k],k});
+                }
+            }
+
+            int minHeight=1e9;
+            for(int j=0;j<curHeightPairs.size();j++){
+                auto [curHeight,c]=curHeightPairs[j];
+
+                minHeight=min(minHeight,curHeight);
+                int base=j+1;
+
+                resArea=max(resArea,minHeight*base);
+            }
+
+
+            prevHeightPairs=curHeightPairs;
+        }
+
+        return resArea;
+    }
+};
+
+
 // Reduce the time complexity from O(rows*cols) --------> O(cols)
 class Solution {
 public:
