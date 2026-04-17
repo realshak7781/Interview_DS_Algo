@@ -1,4 +1,134 @@
+//uSING DP + BINARY SEARCH
+//TIME : O(N*LOG(WALLS))
+// SPACE : O(N)
 
+struct Node{
+    int l;
+    int r;
+    Node(){
+        l=0;
+        r=0;
+    }
+    Node(int leftR,int rightR){
+        l=leftR;
+        r=rightR;
+    }
+};
+class Solution {
+private:
+vector<pair<Node,Node>> robotRanges;
+int totalRobots;
+
+unordered_map<int,unordered_map<int,int>> dp;
+int countWallsDestroyed(int start,int end,vector<int>&walls){
+    int left=0,right=walls.size()-1;
+
+    int leftStart=walls.size();
+    // finding first value that is >=start
+    while(left<=right){
+        int mid=left+(right-left)/2;
+
+        if(walls[mid]>=start){
+            leftStart=mid;
+            right=mid-1;
+        }
+        else{
+            left=mid+1;
+        }
+    }
+
+    // finding first value that is >r
+    left=0,right=walls.size()-1;
+    int rightEnd=walls.size();
+    while(left<=right){
+        int mid=left+(right-left)/2;
+
+        if(walls[mid]>end){
+            rightEnd=mid;
+            right=mid-1;
+        }
+        else{
+            left=mid+1;
+        }
+    }
+
+    int totalDestroyed=rightEnd-leftStart;
+
+    return totalDestroyed;
+}
+
+int solve(int idx,vector<int>& walls,int dir){
+    if(idx>=totalRobots){
+        return 0;
+    }
+
+    if(dp[idx].count(dir)) return dp[idx][dir];
+    int totalDestroyed=0;
+
+    Node leftNode=robotRanges[idx].first;
+    // current robot left range
+    Node rightNode=robotRanges[idx].second;
+    // current robot right range
+
+    int leftStart=leftNode.l;
+    // i want to shoot left but the previous robot shot right
+    if(idx>0 && dir==1){
+        leftStart=max(leftStart,robotRanges[idx-1].second.r+1);
+    }
+    totalDestroyed=countWallsDestroyed(leftStart,leftNode.r,walls) + solve(idx+1,walls,0);
+
+    // i want to shoot right
+    int destroyedRight=countWallsDestroyed(rightNode.l,rightNode.r,walls);
+
+    totalDestroyed=max(totalDestroyed,destroyedRight+solve(idx+1,walls,1));
+
+    return dp[idx][dir]=totalDestroyed;
+}
+public:
+    int maxWalls(vector<int>& robots, vector<int>& distance, vector<int>& walls) {
+        vector<pair<int,int>> robDistance;
+        // {robot_dist,range}
+        for(int i=0;i<robots.size();i++){
+            robDistance.push_back({robots[i],distance[i]});
+        }
+
+        sort(robDistance.begin(),robDistance.end(),[](const pair<int,int>&a,const pair<int,int>&b){
+            return a.first < b.first;
+            // sorting the robDistance array based on the robot coordinates
+        });
+
+        totalRobots=robDistance.size();
+        robotRanges.resize(totalRobots);
+        for(int i=0;i<totalRobots;i++){
+            int cord=robDistance[i].first;
+            int r=robDistance[i].second;
+            // process the left range first
+            Node leftNode;
+            if(i==0){
+                leftNode=Node(cord-r,cord);
+            }
+            else{
+                int prevCord=robDistance[i-1].first;
+                leftNode=Node(max(cord-r,prevCord+1),cord);
+            }
+
+            // process the right robot
+            Node rightNode;
+            if(i==(totalRobots-1)){
+                rightNode=Node(cord,cord+r);
+            }
+            else{
+                int nextCord=robDistance[i+1].first;
+                rightNode=Node(cord,min(cord+r,nextCord-1));
+            }
+            robotRanges[i] = {leftNode, rightNode};
+        }
+
+        sort(walls.begin(),walls.end());
+
+        return solve(0,walls,0);
+    }
+};
 
 // TIME : O(N*WALLS_SIZE)
 // SPACE : O(N)
