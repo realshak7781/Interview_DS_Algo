@@ -1,3 +1,44 @@
+// OPTIMIZED APPROACH
+//USING MATHEMATICAL PATTERN OF SKIPS
+// OPTIMIZED APPROACH
+class Solution {
+public:
+    string decodeCiphertext(string encodedText, int rows) {
+        int len=encodedText.length();
+        int cols=len/rows;
+
+        int skips=cols+1;
+        int totalIterations=rows;
+
+        int c=0;
+        string originalTxt="";
+        while(c<cols){
+
+            int stringIdx=c;
+
+            for(int it=0;it<totalIterations;it++){
+                if(stringIdx>=len) break;
+                originalTxt+=encodedText[stringIdx];
+                stringIdx+=skips;
+            }
+            c++;
+        }
+        // remove the trailing space 
+        int idx=-1;
+        for(int i=originalTxt.length()-1;i>=0;i--){
+            if(originalTxt[i]!=' '){
+                idx=i;
+                break;
+            }
+        }
+
+        if(idx!=-1){
+            originalTxt=originalTxt.substr(0,idx+1);
+        }
+        return originalTxt;
+    }
+};
+
 
 // TIME : O(ROWS*COLS)
 // SPACE : O(ROWS*COLS)
