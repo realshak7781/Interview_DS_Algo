@@ -1,3 +1,86 @@
+
+// MEMOIZATION APPROACH IN PYTHON :
+
+// approach 2:
+
+dp={}
+def solve(idx, f1, f2,word,n):
+    if idx == n:
+        return 0
+
+    key=(idx,f1,f2)
+    if key in dp:
+        return dp[key]
+    curCharVal = ord(word[idx]) - ord("A")
+    r = curCharVal // 6
+    c = curCharVal % 6
+
+    cost1=0
+    if f1!=-1:
+        prev_r=f1//6
+        prev_c=f1%6
+
+        cost1=abs(r-prev_r) + abs(c-prev_c)
+    
+    cost1=cost1+solve(idx+1,curCharVal,f2,word,n)
+
+    cost2=0
+    if f2!=-1:
+        prev_r=f2//6
+        prev_c=f2%6
+
+        cost2=abs(r-prev_r)+abs(c-prev_c)
+    
+    cost2=cost2+solve(idx+1,f1,curCharVal,word,n)
+
+    dp[key]=min(cost1,cost2)
+    return dp[key]
+
+class Solution:
+    def minimumDistance(self, word: str) -> int:
+        n = len(word)
+        dp.clear()
+        return solve(0, -1, -1, word, n)
+
+
+// approach 1:
+@lru_cache(None)
+def solve(idx, f1, f2,word,n):
+    if idx == n:
+        return 0
+
+    curCharVal = ord(word[idx]) - ord("A")
+    r = curCharVal // 6
+    c = curCharVal % 6
+
+    cost1=0
+    if f1!=-1:
+        prev_r=f1//6
+        prev_c=f1%6
+
+        cost1=abs(r-prev_r) + abs(c-prev_c)
+    
+    cost1=cost1+solve(idx+1,curCharVal,f2,word,n)
+
+    cost2=0
+    if f2!=-1:
+        prev_r=f2//6
+        prev_c=f2%6
+
+        cost2=abs(r-prev_r)+abs(c-prev_c)
+    
+    cost2=cost2+solve(idx+1,f1,curCharVal,word,n)
+
+    return min(cost1,cost2)
+
+class Solution:
+    def minimumDistance(self, word: str) -> int:
+        n = len(word)
+
+        return solve(0, -1, -1, word, n)
+
+
+    
 // bottom Up approach:
 class Solution {
 private:
