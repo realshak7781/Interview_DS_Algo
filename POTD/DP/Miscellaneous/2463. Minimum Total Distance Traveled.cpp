@@ -1,3 +1,41 @@
+//Python solutiin :
+class Solution:
+    def minimumTotalDistance(self, robot: List[int], factory: List[List[int]]) -> int:
+        robot.sort()
+        factory.sort(key=lambda x: x[0])
+
+        factoryPos=[]
+
+        for f in factory:
+            count=f[1]
+
+            while count>0:
+                factoryPos.append(f[0])
+                count-=1
+        
+        @lru_cache(None)
+        def solve(i,j):
+
+            if i>=len(robot):
+                return 0
+            
+            if j>=len(factoryPos):
+                return math.inf
+
+            take=solve(i+1,j+1)
+
+            if take!=math.inf:
+                take+=abs(robot[i]-factoryPos[j])
+            
+            skip=solve(i,j+1)
+
+            minDist=min(take,skip)
+
+            return minDist
+        
+        ans=solve(0,0)
+        solve.cache_clear()
+        return ans
 
 
 // Using Recursion + Memoization
