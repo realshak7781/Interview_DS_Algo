@@ -1,3 +1,10 @@
+// USING BOTTOM UP DP:
+// TIME :
+// SPACE:
+
+
+
+
 // OPTIMAL APPROACH :
 // TIME : O(N*N*N)
 // SPACE : O(N*N*N)
