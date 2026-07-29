@@ -1,5 +1,89 @@
+// APPROACH 2:
+// USING SEGMENT TREES
+// TIME : O(QLOGQ)
+// SPACE : O(20*1e4) +o(q)
 
 
+class Solution {
+private:
+void updateQuery(int x,int upVal,int idx,int l,int r,vector<int>&segTree){
+    if(l==r){
+        segTree[idx]=upVal;
+        return;
+    }
+
+    int mid=l+(r-l)/2;
+
+    if(x<=mid){
+        updateQuery(x,upVal,2*idx+1,l,mid,segTree);
+    }
+    else{
+        updateQuery(x,upVal,2*idx+2,mid+1,r,segTree);
+    }
+
+    segTree[idx]=max(segTree[2*idx+1],segTree[2*idx+2]);
+}
+
+int querySegTree(int start,int end,int idx,int l,int r,vector<int>&segTree){
+    if(l>end || r<start) return 0;
+
+    if(l>=start && r<=end){
+        return segTree[idx];
+    }
+
+    int mid=l+(r-l)/2;
+
+    return max(
+        querySegTree(start,end,2*idx+1,l,mid,segTree),
+        querySegTree(start,end,2*idx+2,mid+1,r,segTree)
+        );
+}
+public:
+    vector<bool> getResults(vector<vector<int>>& queries) {
+        set<int> obstacles;
+        obstacles.insert(0);
+
+        int size=5*1e4+1;
+        vector<int> segTree(4*size,0);
+
+
+        vector<bool> res;
+        for(auto &q:queries){
+            int qType=q[0];
+            int x=q[1];
+            if(qType==1){
+                auto it=obstacles.upper_bound(x);
+                int nxt=(it==obstacles.end()? -1:*it);
+                int prv=*prev(it);
+
+                updateQuery(x,x-prv,0,0,size-1,segTree);
+                if(nxt!=-1){
+                    updateQuery(nxt,nxt-x,0,0,size-1,segTree);
+                } 
+
+                obstacles.insert(x);
+            }
+            else{
+                int sz=q[2];
+
+                auto it=obstacles.upper_bound(x);
+                int prv=*prev(it);
+
+                int maxGap=querySegTree(0,prv,0,0,size-1,segTree);
+                maxGap=max(maxGap,x-prv);
+
+                if(maxGap>=sz){
+                    res.push_back(true);
+                }
+                else{
+                    res.push_back(false);
+                }
+            }
+        }
+
+        return res;
+    }
+};
 
 
 // USING BRUTE FORCE APPROACH :
