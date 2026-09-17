@@ -1,6 +1,6 @@
 // APPROACH 2 : USING BINARY LIFTING FOR LCA :
 // TIME : O(Q*LOGN)
-
+// SPACE : O(NlogN+Q)
 class Solution {
 private:
     const int MOD = 1e9 + 7;
