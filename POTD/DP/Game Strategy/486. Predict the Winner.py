@@ -1,3 +1,21 @@
+# brute force using game theory and net difference in score based on who starts firsr
+class Solution:
+    def predictTheWinner(self, nums: list[int]) -> bool:
+        n=len(nums)
+        def solve(i,j):
+            if i==j:
+                return nums[i]
+            
+
+            take_i=nums[i]-solve(i+1,j)
+            take_j=nums[j]-solve(i,j-1)
+
+            return max(take_i,take_j)
+
+        return solve(0,n-1)>=0
+
+
+
 # brute force using p1Turn variable
 class Solution:
     def predictTheWinner(self, nums: list[int]) -> bool:
