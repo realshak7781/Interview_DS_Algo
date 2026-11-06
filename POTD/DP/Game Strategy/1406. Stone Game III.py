@@ -1,4 +1,38 @@
 
+# approach 2.
+class Solution:
+    def stoneGameIII(self, stoneValue: list[int]) -> str:
+        n=len(stoneValue)
+        total_score=sum(stoneValue)
+
+        @cache
+        def solve(idx):
+            # solve(i): starting at idx , what is the max net score starting player can get
+            # net score=myscore -opp_score
+            # intuition : every player is trying to maximise their score
+            # you cannot take sides,play for both sides
+            if idx>=n:
+                return 0
+            
+            net_score=float('-inf')
+            agg=0
+            for offset in range(0,3):
+                new_idx=idx+offset
+                if new_idx<n:
+                    agg+=stoneValue[new_idx]
+
+                    net_score=max(net_score,agg-solve(new_idx+1))
+            
+            return net_score
+
+        alice_score=solve(0)
+
+        if alice_score>=0:
+            return "Alice" if alice_score>0 else "Tie"
+        return "Bob"
+
+
+
 # approach 1 : time : O(n)
 # space  : o(n)
 class Solution:
